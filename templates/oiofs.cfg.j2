@@ -2,13 +2,13 @@
     "redis_sentinel_server": [ {% for redis_ip in openio_redis_cluster_ip[:-1] %} "{{ redis_ip }}:{{ 6012 }}", {% endfor %} "{{ openio_redis_cluster_ip[-1] }}:6012" ],
     "redis_sentinel_name": "{{ openio_oiofs_redis_sentinel_name }}",
     "cache_directory": "{{ openio_oiofs_conf_cache_directory }}",
-    "cache_size": "{{ openio_oiofs_conf_cache_size }}",
-    "cache_size_on_flush": "{{ openio_oiofs_conf_cache_size_on_flush }}",
-    "cache_timeout": "{{ openio_oiofs_conf_cache_timeout }}",
-    "cache_asynchronous": "{{ openio_oiofs_conf_cache_asynchronous }}",
+    "cache_size": {{ openio_oiofs_conf_cache_size }},
+    "cache_size_on_flush": {{ openio_oiofs_conf_cache_size_on_flush }},
+    "cache_timeout": {{ openio_oiofs_conf_cache_timeout }},
+    "cache_asynchronous": {{ openio_oiofs_conf_cache_asynchronous }},
     "stats_server": "{{ openio_oiofs_conf_stats_server }}",
     "log_level": "{{ openio_oiofs_conf_log_level }}",
-    "auto_retry": "{{ openio_oiofs_conf_auto_retry }}",
-    "retry_delay": "{{ openio_oiofs_conf_retry_delay }}",
-    "max_packed_chunks": "{{ openio_oiofs_conf_max_packed_chunks }}"
+    "auto_retry": {{ openio_oiofs_conf_auto_retry }},
+    "retry_delay": {{ openio_oiofs_conf_retry_delay }},
+    "max_packed_chunks": {{ openio_oiofs_conf_max_packed_chunks }}
 }
