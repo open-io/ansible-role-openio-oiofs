@@ -1,4 +1,5 @@
 {
+    "attributes_timeout": {{ openio_oiofs_conf_attributes_timeout }},
     "redis_sentinel_server": [ {% for redis_ip in openio_redis_cluster_ip[:-1] %} "{{ redis_ip }}:{{ 6012 }}", {% endfor %} "{{ openio_redis_cluster_ip[-1] }}:6012" ],
     "redis_sentinel_name": "{{ openio_oiofs_redis_sentinel_name }}",
     "cache_directory": "{{ openio_oiofs_conf_cache_directory }}",
