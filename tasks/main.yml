@@ -29,14 +29,14 @@
 - name: 'oiofs: Set oiofs configuration'
   template:
     src: "{{ openio_oiofs_conf_template }}"
-    dest: "{{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '-') }}.json"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json"
     owner: root
     group: root
     mode: 0644
   with_items: "{{ oiofs_mountpoints }}"
 
 - name: "oiofs: Create the filesystem inside container"
-  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ openio_oiofs_conf_filename }} -v -u {{ item.user }} -g {{ item.group }} -m {{ item.mode }} {{ item.namespace }}/{{ item.account }}/{{ item.container }}"
+  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json -v -u {{ item.user }} -g {{ item.group }} -m {{ item.mode }} {{ item.namespace }}/{{ item.account }}/{{ item.container }}"
   with_items: "{{ oiofs_mountpoints }}"
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
@@ -58,7 +58,7 @@
   with_items: "{{ oiofs_mountpoints }}"
 
 - name: "oiofs: Mount filesystem"
-  shell: "oiofs-fuse {% for flag in item.fuse_flags + item.fuse_options %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ openio_oiofs_conf_filename }} --oiofs-user-url {{ item.namespace }}/{{ item.account }}/{{ item.container }} {{ item.path }}"
+  shell: "oiofs-fuse {% for flag in item.fuse_flags + item.fuse_options %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json --oiofs-user-url {{ item.namespace }}/{{ item.account }}/{{ item.container }} {{ item.path }}"
   with_items: "{{ oiofs_mountpoints }}"
 
 ...
