@@ -28,7 +28,7 @@
 
 - name: 'oiofs: Set oiofs configuration'
   template:
-    src: "{{ openio_oiofs_conf_template }}"
+    src: "oiofs.cfg.j2"
     dest: "{{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json"
     owner: root
     group: root
