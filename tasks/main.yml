@@ -15,22 +15,6 @@
     state: directory
     mode: 0750
 
-- name: 'oiofs: Ensure OpenIO oiofs cache directory exists'
-  file:
-    path: "{{ openio_oiofs_conf_cache_directory }}"
-    owner: root
-    group: root
-    state: directory
-    mode: 0750
-
-- name: 'oiofs: Set global configuration'
-  template:
-    src: "{{ openio_oiofs_conf_template }}"
-    dest: "{{ openio_oiofs_conf_directory }}/{{ openio_oiofs_conf_filename }}"
-    owner: root
-    group: root
-    mode: 0644
-
 - name: 'oiofs: Set per-namespace configuration'
   blockinfile:
     create: yes
@@ -39,5 +23,42 @@
       [{{ item.name }}]
       proxy={{ item.ip }}:{{ item.port }}
   with_items: "{{ openio_oiofs_ns_oioproxies }}"
+
+################################################################################
+
+- name: 'oiofs: Set oiofs configuration'
+  template:
+    src: "{{ openio_oiofs_conf_template }}"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '-') }}.json"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ oiofs_mountpoints }}"
+
+- name: "oiofs: Create the filesystem inside container"
+  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ openio_oiofs_conf_filename }} -v -u {{ item.user }} -g {{ item.group }} -m {{ item.mode }} {{ item.namespace }}/{{ item.account }}/{{ item.container }}"
+  with_items: "{{ oiofs_mountpoints }}"
+
+- name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
+  file:
+    path: "{{ item.path }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0750
+  with_items: "{{ oiofs_mountpoints }}"
+
+- name: 'oiofs: Ensure OpenIO oiofs cache directory exists'
+  file:
+    path: "{{ item.cache_directory }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0750
+  with_items: "{{ oiofs_mountpoints }}"
+
+- name: "oiofs: Mount filesystem"
+  shell: "oiofs-fuse {% for flag in item.fuse_flags + item.fuse_options %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ openio_oiofs_conf_filename }} --oiofs-user-url {{ item.namespace }}/{{ item.account }}/{{ item.container }} {{ item.path }}"
+  with_items: "{{ oiofs_mountpoints }}"
 
 ...
