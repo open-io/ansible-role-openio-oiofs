@@ -25,7 +25,7 @@ openio_oiofs_ns_oioproxies: []
 #  - { name: OPENIO_NS1, ip: 127.0.0.2, port: 6006 }
 #  - { name: OPENIO_NS2, ip: 127.0.0.3, port: 6006 }
 
-openio_oiofs_redis_sentinel_name: "OPENIO-master-1"
+openio_oiofs_redis_sentinel_name: "{{ openio_namespace }}-master-1"
 
 openio_oiofs_redis_sentinel_cluster: []
 #  - { ip: 127.0.1.1, port: 6012 }
