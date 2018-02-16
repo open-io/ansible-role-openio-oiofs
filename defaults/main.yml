@@ -6,7 +6,6 @@ openio_oiofs_packages:
   - oiofs-fuse
 
 openio_oiofs_conf_directory: /etc/oio/sds.conf.d
-openio_oiofs_conf_template: "{{ openio_oiofs_conf_filename }}.j2"
 
 openio_oiofs_conf_attributes_timeout: 0
 openio_oiofs_conf_cache_size: 107374182400
