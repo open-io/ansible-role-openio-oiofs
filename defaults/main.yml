@@ -7,28 +7,40 @@ openio_oiofs_packages:
 
 openio_oiofs_conf_directory: /etc/oio/sds.conf.d
 
-openio_oiofs_conf_attributes_timeout: 0
-openio_oiofs_conf_cache_size: 107374182400
-openio_oiofs_conf_cache_size_on_flush: 53687091200
-openio_oiofs_conf_cache_timeout: 5
-openio_oiofs_conf_cache_asynchronous: true
-openio_oiofs_conf_auto_retry: true
-openio_oiofs_conf_max_packed_chunks: 10
-openio_oiofs_conf_retry_delay: 500
-openio_oiofs_conf_stats_server: "127.0.0.1:8081"
-openio_oiofs_conf_log_level: "NOTICE"
-
 # OpenIO proxies to use for each namespace
 openio_oiofs_ns_oioproxies: []
 #  - { name: OPENIO_NS0, ip: 127.0.0.1, port: 6006 }
 #  - { name: OPENIO_NS1, ip: 127.0.0.2, port: 6006 }
 #  - { name: OPENIO_NS2, ip: 127.0.0.3, port: 6006 }
 
-openio_oiofs_redis_sentinel_name: "{{ openio_namespace }}-master-1"
-
 openio_oiofs_redis_sentinel_cluster: []
 #  - { ip: 127.0.1.1, port: 6012 }
 #  - { ip: 127.0.1.2, port: 6012 }
 #  - { ip: 127.0.1.3, port: 6012 }
+
+oiofs_mountpoints: []
+
+oiofs_mountpoint_default_container: test_container
+oiofs_mountpoint_default_account: test_account
+oiofs_mountpoint_default_namespace: OPENIO
+oiofs_mountpoint_default_attributes_timeout: 0
+oiofs_mountpoint_default_auto_retry: true
+oiofs_mountpoint_default_cache_directory: "/mnt/oiofs-cache"
+oiofs_mountpoint_default_cache_asynchronous: true
+oiofs_mountpoint_default_cache_size_bytes: 1024000000
+oiofs_mountpoint_default_cache_size_on_flush_bytes: 53687091200
+oiofs_mountpoint_default_cache_timeout: 5
+oiofs_mountpoint_default_log_level: "NOTICE"
+oiofs_mountpoint_default_max_packed_chunks: 10
+oiofs_mountpoint_default_retry_delay: 500
+oiofs_mountpoint_default_stats_server: "127.0.0.1:8081"
+oiofs_mountpoint_default_redis_sentinel_name: "{{ oiofs_mountpoint_default_namespace }}-master-1"
+
+oiofs_mountpoint_default_user: root
+oiofs_mountpoint_default_group: root
+oiofs_mountpoint_default_mode: "0755"
+
+oiofs_mountpoint_default_fuse_options: []
+oiofs_mountpoint_default_fuse_flags: []
 
 ...
