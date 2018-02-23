@@ -20,7 +20,7 @@
 - name: 'oiofs: Set oiofs namespace configuration'
   blockinfile:
     create: yes
-    dest: "{{ openio_oiofs_conf_directory }}/{{ item.name }}"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
     block: |
       [{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}]
       proxy={{ item.oioproxy_host | default(oiofs_mountpoint_default_oioproxy_host) }}:{{ item.oioproxy_port | default(oiofs_mountpoint_default_oioproxy_port) }}
