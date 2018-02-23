@@ -35,6 +35,7 @@ oiofs_mountpoint_default_max_packed_chunks: 10
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_stats_server: "127.0.0.1:8081"
 oiofs_mountpoint_default_redis_sentinel_name: "{{ oiofs_mountpoint_default_namespace }}-master-1"
+oiofs_mountpoint_default_force_mkfs: false
 
 oiofs_mountpoint_default_user: root
 oiofs_mountpoint_default_group: root
