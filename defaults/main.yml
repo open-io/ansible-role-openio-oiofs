@@ -7,12 +7,6 @@ openio_oiofs_packages:
 
 openio_oiofs_conf_directory: /etc/oio/sds.conf.d
 
-# OpenIO proxies to use for each namespace
-openio_oiofs_ns_oioproxies: []
-#  - { name: OPENIO_NS0, ip: 127.0.0.1, port: 6006 }
-#  - { name: OPENIO_NS1, ip: 127.0.0.2, port: 6006 }
-#  - { name: OPENIO_NS2, ip: 127.0.0.3, port: 6006 }
-
 openio_oiofs_redis_sentinel_cluster: []
 #  - { ip: 127.0.1.1, port: 6012 }
 #  - { ip: 127.0.1.2, port: 6012 }
@@ -23,6 +17,8 @@ oiofs_mountpoints: []
 oiofs_mountpoint_default_container: test_container
 oiofs_mountpoint_default_account: test_account
 oiofs_mountpoint_default_namespace: OPENIO
+oiofs_mountpoint_default_oioproxy_host: "127.0.0.1"
+oiofs_mountpoint_default_oioproxy_port: 6006
 oiofs_mountpoint_default_attributes_timeout: 0
 oiofs_mountpoint_default_auto_retry: true
 oiofs_mountpoint_default_cache_directory: "/mnt/oiofs-cache"

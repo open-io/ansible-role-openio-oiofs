@@ -15,16 +15,16 @@
     state: directory
     mode: 0750
 
-- name: 'oiofs: Set per-namespace configuration'
+################################################################################
+
+- name: 'oiofs: Set oiofs namespace configuration'
   blockinfile:
     create: yes
     dest: "{{ openio_oiofs_conf_directory }}/{{ item.name }}"
     block: |
-      [{{ item.name }}]
-      proxy={{ item.ip }}:{{ item.port }}
-  with_items: "{{ openio_oiofs_ns_oioproxies }}"
-
-################################################################################
+      [{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}]
+      proxy={{ item.oioproxy_host | default(oiofs_mountpoint_default_oioproxy_host) }}:{{ item.oioproxy_port | default(oiofs_mountpoint_default_oioproxy_port) }}
+  with_items: "{{ oiofs_mountpoints }}"
 
 - name: 'oiofs: Set oiofs configuration'
   template:
