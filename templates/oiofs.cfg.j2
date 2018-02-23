@@ -1,6 +1,6 @@
 {
     "attributes_timeout": {{ item.attributes_timeout | default(oiofs_mountpoint_default_attributes_timeout) }},
-    "redis_sentinel_server": [ {% for redis in (item.redis_sentinel_cluster | default([])) %} "{{ redis.host }}:{{ redis.port | default(oiofs_mountpoint_default_redis_sentinel_port) }}", {% endfor %} ],
+    "redis_sentinel_server": {{ item.redis_sentinel_cluster | default([]) }},
     "redis_sentinel_name": "{{ item.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
     "cache_directory": "{{ item.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}",
     "cache_size": {{ item.cache_size_bytes | default(oiofs_mountpoint_default_cache_size_bytes) }},
