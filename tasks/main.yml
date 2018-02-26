@@ -57,8 +57,16 @@
     mode: 0750
   with_items: "{{ oiofs_mountpoints }}"
 
+################################################################################
+
 - name: "oiofs: Mount filesystem"
   shell: "oiofs-fuse {% for opt in (item.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (item.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json --oiofs-user-url {{ item.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ item.account | default(oiofs_mountpoint_default_account) }}/{{ item.container | default(oiofs_mountpoint_default_container) }} {{ item.path }}"
   with_items: "{{ oiofs_mountpoints }}"
+  when: item.state == 'present'
+
+- name: "oiofs: Unmount filesystem"
+  shell: "grep -q ' on {{ item.path }} type fuse.oiofs-fuse ' /proc/mounts && fusermount -u {{ item.path }} || true"
+  with_items: "{{ oiofs_mountpoints }}"
+  when: item.state == 'absent'
 
 ...
