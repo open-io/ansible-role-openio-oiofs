@@ -17,14 +17,21 @@
 
 ################################################################################
 
-- name: 'oiofs: Set oiofs namespace configuration'
-  blockinfile:
-    create: yes
-    dest: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
-    block: |
-      [{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}]
-      proxy={{ item.oioproxy_host | default(oiofs_mountpoint_default_oioproxy_host) }}:{{ item.oioproxy_port | default(oiofs_mountpoint_default_oioproxy_port) }}
+- name: 'oiofs: Check pre-existence of OpenIO SDS namespace configuration file: {{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}'
+  stat:
+    path: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
+  register: oio_ns_cfg
   with_items: "{{ oiofs_mountpoints }}"
+
+- name: 'oiofs: Set OpenIO SDS namespace configuration if not already present'
+  template:
+    src: "sds_ns.cfg.j2"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ oiofs_mountpoints }}"
+  when: not (oio_ns_cfg.results | map(attribute="stat") | selectattr("path", "equalto", openio_oiofs_conf_directory + "/" + (item.namespace | default(oiofs_mountpoint_default_namespace))) | first).exists
 
 - name: 'oiofs: Set oiofs configuration'
   template:
