@@ -1,6 +1,6 @@
 {
     "attributes_timeout": {{ mountpoint.attributes_timeout | default(oiofs_mountpoint_default_attributes_timeout) }},
-    "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default([]) }},
+    "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default([]) | to_json }},
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
     "cache_directory": "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}",
     "cache_size": {{ mountpoint.cache_size_bytes | default(oiofs_mountpoint_default_cache_size_bytes) }},
