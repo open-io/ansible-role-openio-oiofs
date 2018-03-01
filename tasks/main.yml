@@ -15,65 +15,10 @@
     state: directory
     mode: 0750
 
-################################################################################
-
-- name: 'oiofs: Check pre-existence of OpenIO SDS namespace configuration file: {{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}'
-  stat:
-    path: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
-  register: oio_ns_cfg
+- name: 'oiofs: Setup namespace'
+  include_tasks: mountpoint.yml
   with_items: "{{ oiofs_mountpoints }}"
-
-- name: 'oiofs: Set OpenIO SDS namespace configuration if not already present'
-  template:
-    src: "sds_ns.cfg.j2"
-    dest: "{{ openio_oiofs_conf_directory }}/{{ item.namespace | default(oiofs_mountpoint_default_namespace) }}"
-    owner: root
-    group: root
-    mode: 0644
-  with_items: "{{ oiofs_mountpoints }}"
-  when: not (oio_ns_cfg.results | map(attribute="stat") | selectattr("path", "equalto", openio_oiofs_conf_directory + "/" + (item.namespace | default(oiofs_mountpoint_default_namespace))) | first).exists
-
-- name: 'oiofs: Set oiofs configuration'
-  template:
-    src: "oiofs.cfg.j2"
-    dest: "{{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json"
-    owner: root
-    group: root
-    mode: 0644
-  with_items: "{{ oiofs_mountpoints }}"
-
-- name: "oiofs: Create the filesystem inside container"
-  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json -v {% if item.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ item.user | default(oiofs_mountpoint_default_user) }} -g {{ item.group | default(oiofs_mountpoint_default_group) }} -m {{ item.mode | default(oiofs_mountpoint_default_mode) }} {{ item.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ item.account | default(oiofs_mountpoint_default_account) }}/{{ item.container | default(oiofs_mountpoint_default_container) }}"
-  with_items: "{{ oiofs_mountpoints }}"
-
-- name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
-  file:
-    path: "{{ item.path }}"
-    owner: root
-    group: root
-    state: directory
-    mode: 0750
-  with_items: "{{ oiofs_mountpoints }}"
-
-- name: 'oiofs: Ensure OpenIO oiofs cache directory exists'
-  file:
-    path: "{{ item.cache_directory }}"
-    owner: root
-    group: root
-    state: directory
-    mode: 0750
-  with_items: "{{ oiofs_mountpoints }}"
-
-################################################################################
-
-- name: "oiofs: Mount filesystem"
-  shell: "oiofs-fuse {% for opt in (item.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (item.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ item.path | replace('/', '_') }}.json --cache-action {{ item.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ item.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ item.account | default(oiofs_mountpoint_default_account) }}/{{ item.container | default(oiofs_mountpoint_default_container) }} {{ item.path }}"
-  with_items: "{{ oiofs_mountpoints }}"
-  when: item.state == 'present'
-
-- name: "oiofs: Unmount filesystem"
-  shell: "grep -q ' on {{ item.path }} type fuse.oiofs-fuse ' /proc/mounts && fusermount -u {{ item.path }} || true"
-  with_items: "{{ oiofs_mountpoints }}"
-  when: item.state == 'absent'
+  loop_control:
+    loop_var: mountpoint
 
 ...
