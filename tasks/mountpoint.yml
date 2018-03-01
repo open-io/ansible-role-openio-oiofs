@@ -14,8 +14,8 @@
     group: root
     mode: 0644
   when:
-    - not oio_ns_cfg.stat.exists
     - mountpoint.state == 'present'
+    - not oio_ns_cfg.stat.exists
 
 - name: 'oiofs: Set oiofs configuration'
   template:
