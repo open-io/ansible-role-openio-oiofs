@@ -1,0 +1,56 @@
+---
+
+- name: 'oiofs: Check pre-existence of SDS namespace configuration'
+  stat:
+    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+  register: oio_ns_cfg
+
+- name: 'oiofs: Setup SDS namespace configuration if not already present'
+  template:
+    src: "sds_ns.cfg.j2"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: not oio_ns_cfg.stat.exists
+
+- name: 'oiofs: Create SDS namespace configuration uninstallation cookie file'
+  file:
+    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+  when: not oio_ns_cfg.stat.exists
+
+- name: 'oiofs: Setup oiofs configuration'
+  template:
+    src: "oiofs.cfg.j2"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "oiofs: Create the filesystem inside container"
+  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
+
+- name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
+  file:
+    path: "{{ mountpoint.path }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0750
+
+- name: 'oiofs: Ensure oiofs cache directory exists'
+  file:
+    path: "{{ mountpoint.cache_directory }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0750
+
+- name: "oiofs: Mount filesystem"
+  shell: "oiofs-fuse {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
+
+...

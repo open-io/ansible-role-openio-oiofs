@@ -15,10 +15,18 @@
     state: directory
     mode: 0750
 
-- name: 'oiofs: Setup namespace'
-  include_tasks: mountpoint.yml
+- name: 'oiofs: Setup mountpoint'
+  include_tasks: mountpoint_present.yml
   with_items: "{{ oiofs_mountpoints }}"
   loop_control:
     loop_var: mountpoint
+  when: mountpoint.state == 'present'
+
+- name: 'oiofs: Unsetup mountpoint'
+  include_tasks: mountpoint_absent.yml
+  with_items: "{{ oiofs_mountpoints }}"
+  loop_control:
+    loop_var: mountpoint
+  when: mountpoint.state == 'absent'
 
 ...
