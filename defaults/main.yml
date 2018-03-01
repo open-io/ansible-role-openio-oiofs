@@ -14,7 +14,7 @@ oiofs_mountpoint_default_account: test_account
 oiofs_mountpoint_default_namespace: OPENIO
 oiofs_mountpoint_default_oioproxy_host: "127.0.0.1"
 oiofs_mountpoint_default_oioproxy_port: 6006
-oiofs_mountpoint_default_attributes_timeout: 0
+oiofs_mountpoint_default_attributes_timeout: 20
 oiofs_mountpoint_default_auto_retry: true
 oiofs_mountpoint_default_cache_directory: "/mnt/oiofs-cache"
 oiofs_mountpoint_default_cache_asynchronous: true
