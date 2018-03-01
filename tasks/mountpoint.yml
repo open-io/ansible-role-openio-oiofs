@@ -4,6 +4,7 @@
   stat:
     path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
   register: oio_ns_cfg
+  when: mountpoint.state == 'present'
 
 - name: 'oiofs: Set OpenIO SDS namespace configuration if not already present'
   template:
@@ -12,7 +13,9 @@
     owner: root
     group: root
     mode: 0644
-  when: not oio_ns_cfg.stat.exists
+  when:
+    - not oio_ns_cfg.stat.exists
+    - mountpoint.state == 'present'
 
 - name: 'oiofs: Set oiofs configuration'
   template:
@@ -21,11 +24,13 @@
     owner: root
     group: root
     mode: 0644
+  when: mountpoint.state == 'present'
 
 ################################################################################
 
 - name: "oiofs: Create the filesystem inside container"
   shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
+  when: mountpoint.state == 'present'
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
@@ -34,6 +39,7 @@
     group: root
     state: directory
     mode: 0750
+  when: mountpoint.state == 'present'
 
 - name: 'oiofs: Ensure OpenIO oiofs cache directory exists'
   file:
@@ -42,6 +48,7 @@
     group: root
     state: directory
     mode: 0750
+  when: mountpoint.state == 'present'
 
 ################################################################################
 
