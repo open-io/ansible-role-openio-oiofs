@@ -35,6 +35,6 @@ oiofs_mountpoint_default_group: 'root'
 oiofs_mountpoint_default_mode: '0755'
 
 oiofs_mountpoint_default_fuse_options: []
-oiofs_mountpoint_default_fuse_flags: []
+oiofs_mountpoint_default_fuse_flags: ['default_permissions', 'allow_other']
 
 ...
