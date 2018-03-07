@@ -5,7 +5,8 @@ openio_oiofs_packages:
   - openio-sds-common
   - oiofs-fuse
 
-openio_oiofs_conf_directory: '/etc/oio/sds.conf.d'
+openio_oiofs_conf_directory: '/etc/oio/oiofs.conf.d'
+openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 
 oiofs_mountpoints: []
 
