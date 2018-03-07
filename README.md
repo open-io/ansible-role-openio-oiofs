@@ -54,7 +54,7 @@ Each mountpoint to setup can specify the following members:
 This role also requires the presence of the following roles in your ansible `roles` directory:
 - ansible-role-repo-openio-sds
 - ansible-role-openio-sds
-- ansible-role-gridinit
+- ansible-role-openio-gridinit
 
 You need to configure OpenIO SDS & oiofs repositories, an Ansible role
 [openio-repo-openio-sds](https://github.com/open-io/ansible-role-repo-openio-sds) exists to help with that.
