@@ -5,18 +5,18 @@
 
 - name: 'oiofs: Check existence of SDS namespace configuration uninstallation cookie file'
   stat:
-    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
+    path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
   register: oio_ns_cfg_cookie
 
 - name: 'oiofs: Remove SDS configuration file that was installed by oiofs'
   file:
-    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+    path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
     state: absent
   when: oio_ns_cfg_cookie.stat.exists
 
 - name: 'oiofs: Remove SDS namespace configuration uninstallation cookie file'
   file:
-    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
+    path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
     state: absent
   when: oio_ns_cfg_cookie.stat.exists
 
