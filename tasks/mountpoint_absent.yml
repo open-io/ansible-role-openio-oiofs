@@ -3,6 +3,15 @@
 - name: "oiofs: Unmount filesystem"
   shell: "grep -q ' on {{ mountpoint.path }} type fuse.oiofs-fuse ' /proc/mounts && fusermount -u {{ mountpoint.path }} || true"
 
+- name: 'oiofs: Remove mountpoint as a gridinit service'
+  include_role:
+    name: ansible-role-openio-gridinit
+  vars:
+    - openio_gridinit_services:
+      - name: "oiofs-{{ mountpoint.path | replace('/', '_') }}"
+        namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+        state: absent
+
 - name: 'oiofs: Check existence of SDS namespace configuration uninstallation cookie file'
   stat:
     path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
