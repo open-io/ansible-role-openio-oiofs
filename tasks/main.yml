@@ -32,6 +32,8 @@
 
 - name: 'oiofs: Setup mountpoint'
   include_tasks: mountpoint_present.yml
+  vars:
+    mountpoint_id: "{{ (mountpoint.path | replace('/', '_') | replace('-', '_'))[1:] }}"
   with_items: "{{ oiofs_mountpoints }}"
   loop_control:
     loop_var: mountpoint
@@ -39,6 +41,8 @@
 
 - name: 'oiofs: Unsetup mountpoint'
   include_tasks: mountpoint_absent.yml
+  vars:
+    mountpoint_id: "{{ (mountpoint.path | replace('/', '_') | replace('-', '_'))[1:] }}"
   with_items: "{{ oiofs_mountpoints }}"
   loop_control:
     loop_var: mountpoint

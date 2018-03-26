@@ -12,13 +12,13 @@
 - name: 'oiofs: Setup oiofs configuration'
   template:
     src: "oiofs.cfg.j2"
-    dest: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json"
+    dest: "{{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json"
     owner: root
     group: root
     mode: 0644
 
 - name: "oiofs: Create the filesystem inside container"
-  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
+  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
@@ -43,12 +43,12 @@
     - configure
   vars:
     - openio_gridinit_services:
-      - name: "oiofs-{{ mountpoint.path | replace('/', '_') }}"
+      - name: "oiofs-{{ mountpoint_id }}"
         namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
         state: 'present'
         type: oiofs
         configuration:
-          command: "oiofs-fuse {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
+          command: "oiofs-fuse {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} -o {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
           enabled: true
           start_at_boot: true
           on_die: respawn
