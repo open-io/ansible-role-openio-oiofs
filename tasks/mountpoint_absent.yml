@@ -1,7 +1,7 @@
 ---
 
-- name: "oiofs: Unmount filesystem"
-  shell: "grep -q ' on {{ mountpoint.path }} type fuse.oiofs-fuse ' /proc/mounts && fusermount -u {{ mountpoint.path }} || true"
+- name: "oiofs: Unmount filesystem (by stopping gridinit service)"
+  command: "gridinit_cmd stop oiofs-{{ mountpoint_id }}"
 
 - name: 'oiofs: Remove mountpoint as a gridinit service'
   include_role:
