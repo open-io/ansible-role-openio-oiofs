@@ -38,7 +38,7 @@ Each mountpoint to setup can specify the following members:
 | `cache_timeout` | `5` | seconds between automatic cache flushes |
 | `log_level` | `'NOTICE'` | NOTICE < INFO < DEBUG |
 | `max_packed_chunks` | `10` |  |
-| `stats_server` | `'127.0.0.1:8081'` | Web service address to query for mountpoint statistics |
+| `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name |
 | `redis_sentinel_cluster` | `[]` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
 | `force_mkfs` | `false` | In case the container already had an oiofs inside |
