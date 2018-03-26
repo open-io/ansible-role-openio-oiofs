@@ -10,13 +10,13 @@
     - configure
   vars:
     - openio_gridinit_services:
-      - name: "oiofs-{{ mountpoint.path | replace('/', '_') }}"
+      - name: "oiofs-{{ mountpoint_id }}"
         namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
         state: absent
 
 - name: 'oiofs: Remove oiofs configuration file'
   file:
-    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint.path | replace('/', '_') }}.json"
+    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json"
     state: absent
 
 ...
