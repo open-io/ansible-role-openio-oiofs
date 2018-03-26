@@ -39,8 +39,6 @@
 - name: 'oiofs: Setup mountpoint as a gridinit service'
   include_role:
     name: ansible-role-openio-gridinit
-  tags:
-    - configure
   vars:
     - openio_gridinit_services:
       - name: "oiofs-{{ mountpoint_id }}"
