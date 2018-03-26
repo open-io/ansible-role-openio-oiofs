@@ -26,7 +26,6 @@ oiofs_mountpoint_default_cache_timeout: 5
 oiofs_mountpoint_default_cache_action: 'flush' # 'flush' / 'erase'
 oiofs_mountpoint_default_log_level: 'NOTICE' # 'NOTICE' < 'INFO' < 'DEBUG'
 oiofs_mountpoint_default_max_packed_chunks: 10
-oiofs_mountpoint_default_stats_server: '127.0.0.1:8081'
 oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
 oiofs_mountpoint_default_redis_sentinel_cluster: []
 oiofs_mountpoint_default_force_mkfs: false
