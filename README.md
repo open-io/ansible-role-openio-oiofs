@@ -46,25 +46,14 @@ Each mountpoint to setup can specify the following members:
 | `user` | `root` |  |
 | `group` | `root` |  |
 | `mode` | `'0755'` |  |
-| `fuse_options` | `[]` | List of strings: options passed when mounting the filesystem |
-| `fuse_flags` | `['default_permissions', 'allow_other']` | List of strings: flags passed when mounting the filesystem |
+| `fuse_options` | `['-f']` | List of strings: options passed to fuse when mounting the filesystem |
+| `fuse_flags` | `['default_permissions', 'allow_other']` | List of strings: flags passed to fuse when mounting the filesystem |
 
 ## Dependencies
 
 This role also requires the presence of the following roles in your ansible `roles` directory:
-- ansible-role-repo-openio-sds
-- ansible-role-openio-sds
-- ansible-role-openio-gridinit
-
-You need to configure OpenIO SDS & oiofs repositories, an Ansible role
-[openio-repo-openio-sds](https://github.com/open-io/ansible-role-repo-openio-sds) exists to help with that.
-
-For SDS, you don't need to pass additional variables, just use the following playbook snippet:
-
-```
-  roles:
-    - { role: ansible-role-repo-openio-sds }
-```
+- [ansible-role-openio-repository](https://github.com/open-io/ansible-role-openio-repository)
+- [ansible-role-openio-gridinit](https://github.com/open-io/ansible-role-openio-gridinit)
 
 For oiofs repository you'll need to add some variables for the role, like in the following playbook snippet:
 
@@ -85,6 +74,16 @@ You'll need to create an account for each namespace used for oiofs, for example:
 
 ```
 openio --oio-ns OPENIO account create test_account
+```
+
+And then you can use `test_account` in
+
+```
+oiofs_mountpoints:
+  - path: "THE_TARGET_PATH"
+    [...]
+    account: test_account
+    [...]
 ```
 
 This may also be included in your playbook. See example below.
@@ -152,6 +151,7 @@ This example assumes an ansible inventory with specific host groups (`openio_con
         oiofs_mountpoints:
           - path: "/mnt/oiofs-2/mnt"
             state: 'present'
+            account: 'test_account'
             cache_directory: /mnt/oiofs-2/cache
             container: test_container_2
             force_mkfs: false
@@ -168,6 +168,7 @@ This example assumes an ansible inventory with specific host groups (`openio_con
         oiofs_mountpoints:
           - path: "/mnt/oiofs-1/mnt"
             state: 'present'
+            account: 'test_account'
             cache_directory: /mnt/oiofs-1/cache
             container: test_container_1
             force_mkfs: true
