@@ -1,27 +1,13 @@
 ---
 
-- name: 'oiofs: Check pre-existence of SDS namespace configuration'
-  stat:
-    path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-  register: oio_ns_cfg
-
 - name: 'oiofs: Setup SDS namespace configuration if not already present'
   template:
     src: "sds_ns.cfg.j2"
     dest: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+    force: no
     owner: root
     group: root
     mode: 0644
-  when: not oio_ns_cfg.stat.exists
-
-- name: 'oiofs: Create SDS namespace configuration uninstallation cookie file'
-  file:
-    path: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}.oiofs"
-    state: touch
-    owner: root
-    group: root
-    mode: 0644
-  when: not oio_ns_cfg.stat.exists
 
 - name: 'oiofs: Setup oiofs configuration'
   template:
