@@ -23,13 +23,6 @@
     state: directory
     mode: 0750
 
-- name: 'oiofs: Install gridinit'
-  include_role:
-    name: ansible-role-openio-gridinit
-  tags:
-    - install
-  when: (oiofs_mountpoints | selectattr("state", "equalto", "present") | list | count) > 0
-
 - name: 'oiofs: Setup mountpoint'
   include_tasks: mountpoint_present.yml
   vars:
