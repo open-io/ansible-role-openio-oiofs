@@ -61,13 +61,12 @@ For oiofs repository you'll need to add some variables for the role, like in the
   tasks:
     - name: "Setup oiofs repository"
       include_role:
-          name: ansible-role-repo-openio-sds
+          name: ansible-role-openio-repository
       vars:
           openio_sds_release: 'unstable'
           openio_sds_repo_product: 'oiofs'
           openio_sds_repo_user: 'oiofs'
           openio_sds_repo_pass: 'THE_MIRROR_PASSWORD'
-          openio_sds_repo_altrepo: true
 ```
 
 You'll need to create an account for each namespace used for oiofs, for example:
@@ -99,7 +98,7 @@ This example assumes an ansible inventory with specific host groups (`openio_con
   hosts: all
 
   roles:
-    - { role: ansible-role-repo-openio-sds }
+    - { role: ansible-role-openio-repository }
 
 - name: Create the account for OpenIO oiofs
   hosts: all
@@ -123,16 +122,15 @@ This example assumes an ansible inventory with specific host groups (`openio_con
   hosts: openio_oiofs
 
   tasks:
-    - name: "Apply 'ansible-role-repo-openio-sds' role"
+    - name: "Apply 'ansible-role-openio-repository' role"
       include_role:
-          name: ansible-role-repo-openio-sds
+          name: ansible-role-openio-repository
       vars:
           # Get latest build for now, from unstable repo
           openio_sds_release: 'unstable'
           openio_sds_repo_product: 'oiofs'
           openio_sds_repo_user: 'oiofs'
           openio_sds_repo_pass: 'THE_MIRROR_PASSWORD'
-          openio_sds_repo_altrepo: true
 
 - name: Install and configure OpenIO oiofs
   hosts: all
