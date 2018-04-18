@@ -55,7 +55,7 @@ This role also requires the presence of the following roles in your ansible `rol
 - [ansible-role-openio-repository](https://github.com/open-io/ansible-role-openio-repository)
 - [ansible-role-openio-gridinit](https://github.com/open-io/ansible-role-openio-gridinit)
 
-For oiofs repository you'll need to add some variables for the role, like in the following playbook snippet:
+For oiofs repository setup you'll need to add some variables for the role, like in the following playbook snippet:
 
 ```
   tasks:
