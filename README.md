@@ -46,8 +46,8 @@ Each mountpoint to setup can specify the following members:
 | `user` | `root` |  |
 | `group` | `root` |  |
 | `mode` | `'0755'` |  |
-| `fuse_options` | `['-f']` | List of strings: options passed to fuse when mounting the filesystem |
-| `fuse_flags` | `['default_permissions', 'allow_other']` | List of strings: flags passed to fuse when mounting the filesystem |
+| `fuse_options` | `['default_permissions', 'allow_other']` | List of strings: options passed to fuse with a "-o" when mounting the filesystem |
+| `fuse_flags` | `[]` | List of strings: flags passed to fuse when mounting the filesystem |
 
 ## Dependencies
 
@@ -174,7 +174,7 @@ This example assumes an ansible inventory with specific host groups (`openio_con
             oioproxy_host: "{{ oioproxy_hosts[0] }}"
             redis_sentinel_cluster: "{{ redis_sentinel_cluster }}"
 
-            fuse_flags:
+            fuse_options:
               - default_permissions
               - allow_other
 
