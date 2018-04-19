@@ -5,16 +5,16 @@
     src: "sds_ns.cfg.j2"
     dest: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
     force: no
-    owner: root
-    group: root
+    owner: '{{ openio_oiofs_cfg_user }}'
+    group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
 
 - name: 'oiofs: Setup oiofs configuration'
   template:
     src: "oiofs.cfg.j2"
     dest: "{{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json"
-    owner: root
-    group: root
+    owner: '{{ openio_oiofs_cfg_user }}'
+    group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
 
 - name: "oiofs: Create the filesystem inside container"

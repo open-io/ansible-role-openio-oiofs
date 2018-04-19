@@ -8,6 +8,9 @@ openio_oiofs_packages:
 openio_oiofs_conf_directory: '/etc/oio/oiofs.conf.d'
 openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 
+openio_oiofs_cfg_user: 'openio'
+openio_oiofs_cfg_group: 'openio'
+
 oiofs_mountpoints: []
 
 oiofs_mountpoint_default_container: 'test_container'
