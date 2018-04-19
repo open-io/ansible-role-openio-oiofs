@@ -11,11 +11,13 @@ This role supports Centos 7 and Ubuntu 16.04 Xenial.
 
 ## Role Variables
 
-| Variable						| Default					| Comments (type) |
-| :---							| :---						| :--- |
-| `openio_sds_conf_directory`	| `'/etc/oio/sds.conf.d'`	| OpenIO SDS configuration directory (for namespace config file) |
+| Variable											| Default					| Comments (type) |
+| :---													| :---						| :--- |
+| `openio_sds_conf_directory`		| `'/etc/oio/sds.conf.d'`	| OpenIO SDS configuration directory (for namespace config file) |
 | `openio_oiofs_conf_directory`	| `'/etc/oio/oiofs.conf.d'`	| OpenIO oiofs configuration directory (for mountpoints config files) |
-| `oiofs_mountpoints`			| `[]`						| List of mountpoints to setup (see below for structure) |
+| `oiofs_mountpoints`						| `[]`						| List of mountpoints to setup (see below for structure) |
+| `openio_oiofs_cfg_user`				| `'openio'`						| Owner for config files |
+| `openio_oiofs_cfg_group`			| `'openio'`						| Group for config files |
 
 Each mountpoint to setup can specify the following members:
 
