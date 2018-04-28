@@ -39,7 +39,6 @@ oiofs_mountpoint_default_ignore_flush: true
 oiofs_mountpoint_default_log_level: 'NOTICE'  # 'NOTICE' < 'INFO' < 'DEBUG'
 oiofs_mountpoint_default_max_packed_chunks: 10
 oiofs_mountpoint_default_max_redis_connections: 30
-oiofs_mountpoint_default_recovery_cache_directory: '/mnt/oiofs-recover'
 oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
 oiofs_mountpoint_default_redis_sentinel_cluster: []
 oiofs_mountpoint_default_retry_delay: 500

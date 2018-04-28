@@ -8,7 +8,7 @@
 
 - name: 'oiofs: Remove mountpoint as a gridinit service'
   include_role:
-    name: ansible-role-openio-gridinit
+    name: gridinit
   vars:
     - openio_gridinit_services:
       - name: "oiofs-{{ mountpoint_id }}"
