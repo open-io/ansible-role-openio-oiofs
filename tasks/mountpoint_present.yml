@@ -43,10 +43,11 @@
     group: root
     state: directory
     mode: 0750
+  when: mountpoint.recovery_cache_directory is defined
 
 - name: 'oiofs: Setup mountpoint as a gridinit service'
   include_role:
-    name: ansible-role-openio-gridinit
+    name: gridinit
   vars:
     - openio_gridinit_services:
       - name: "oiofs-{{ mountpoint_id }}"

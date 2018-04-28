@@ -2,19 +2,20 @@
 {% if mountpoint.stats_server is defined %}
     "stats_server": "{{ mountpoint.stats_server }}",
 {% endif %}
-
     "attributes_timeout": {{ mountpoint.attributes_timeout | default(oiofs_mountpoint_default_attributes_timeout) }},
-    "auto_retry": {{ mountpoint.auto_retry | default(oiofs_mountpoint_default_auto_retry) }},
-    "cache_asynchronous": {{ mountpoint.cache_asynchronous | default(oiofs_mountpoint_default_cache_asynchronous) }},
+    "auto_retry": {{ mountpoint.auto_retry | default(oiofs_mountpoint_default_auto_retry) | lower }},
+    "cache_asynchronous": {{ mountpoint.cache_asynchronous | default(oiofs_mountpoint_default_cache_asynchronous) | lower }},
     "cache_directory": "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}",
     "cache_size": {{ mountpoint.cache_size_bytes | default(oiofs_mountpoint_default_cache_size_bytes) }},
     "cache_size_on_flush": {{ mountpoint.cache_size_on_flush_bytes | default(oiofs_mountpoint_default_cache_size_on_flush_bytes) }},
     "cache_timeout": {{ mountpoint.cache_timeout | default(oiofs_mountpoint_default_cache_timeout) }},
-    "ignore_flush": {{ mountpoint.ignore_flush | default(oiofs_mountpoint_default_ignore_flush) }},
+    "ignore_flush": {{ mountpoint.ignore_flush | default(oiofs_mountpoint_default_ignore_flush) | lower }},
     "log_level": "{{ mountpoint.log_level | default(oiofs_mountpoint_default_log_level) }}",
     "max_packed_chunks": {{ mountpoint.max_packed_chunks | default(oiofs_mountpoint_default_max_packed_chunks) }},
     "max_redis_connections": {{ mountpoint.max_redis_connections | default(oiofs_mountpoint_default_max_redis_connections) }},
-    "recovery_cache_directory": {{ mountpoint.recovery_cache_directory | default(oiofs_mountpoint_default_recovery_cache_directory) }},
+{% if mountpoint.recovery_cache_directory is defined %}
+    "recovery_cache_directory": "{{ mountpoint.recovery_cache_directory }}",
+{% endif %}
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
     "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default(oiofs_mountpoint_default_redis_sentinel_cluster) | to_json }},
     "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) }}
