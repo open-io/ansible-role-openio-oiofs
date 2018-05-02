@@ -50,6 +50,7 @@ Each mountpoint to setup can specify the following members:
 | `mode` | `'0755'` |  |
 | `fuse_options` | `['default_permissions', 'allow_other']` | List of strings: options passed to fuse with a "-o" when mounting the filesystem |
 | `fuse_flags` | `[]` | List of strings: flags passed to fuse when mounting the filesystem |
+| `recovery_cache_directory` | `'/mnt/oiofs-recover'` | Local recovery cache directory |
 
 ## Dependencies
 
