@@ -18,26 +18,30 @@ oiofs_mountpoint_default_account: 'test_account'
 oiofs_mountpoint_default_namespace: 'OPENIO'
 oiofs_mountpoint_default_oioproxy_host: '127.0.0.1'
 oiofs_mountpoint_default_oioproxy_port: 6006
-oiofs_mountpoint_default_attributes_timeout: 20
-oiofs_mountpoint_default_auto_retry: true
-oiofs_mountpoint_default_retry_delay: 500
-oiofs_mountpoint_default_cache_directory: '/mnt/oiofs-cache'
-oiofs_mountpoint_default_cache_asynchronous: true
-oiofs_mountpoint_default_cache_size_bytes: 2048000000
-oiofs_mountpoint_default_cache_size_on_flush_bytes: 1024000000
-oiofs_mountpoint_default_cache_timeout: 5
-oiofs_mountpoint_default_cache_action: 'flush' # 'flush' / 'erase'
-oiofs_mountpoint_default_log_level: 'NOTICE' # 'NOTICE' < 'INFO' < 'DEBUG'
-oiofs_mountpoint_default_max_packed_chunks: 10
-oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
-oiofs_mountpoint_default_redis_sentinel_cluster: []
+oiofs_mountpoint_default_cache_action: 'flush'  # 'flush' / 'erase'
 oiofs_mountpoint_default_force_mkfs: false
-
 oiofs_mountpoint_default_user: 'root'
 oiofs_mountpoint_default_group: 'root'
 oiofs_mountpoint_default_mode: '0755'
-
 oiofs_mountpoint_default_fuse_options: ['default_permissions', 'allow_other']
 oiofs_mountpoint_default_fuse_flags: []
+
+# Those are for the template: oiofs.cfg.j2
+# See documentation at: https://github.com/open-io/oio-fs/blob/master/CONF.md
+oiofs_mountpoint_default_attributes_timeout: 20
+oiofs_mountpoint_default_auto_retry: true
+oiofs_mountpoint_default_cache_asynchronous: true
+oiofs_mountpoint_default_cache_directory: '/mnt/oiofs-cache'
+oiofs_mountpoint_default_cache_size_bytes: 2048000000
+oiofs_mountpoint_default_cache_size_on_flush_bytes: 1024000000
+oiofs_mountpoint_default_cache_timeout: 5
+oiofs_mountpoint_default_ignore_flush: true
+oiofs_mountpoint_default_log_level: 'NOTICE'  # 'NOTICE' < 'INFO' < 'DEBUG'
+oiofs_mountpoint_default_max_packed_chunks: 10
+oiofs_mountpoint_default_max_redis_connections: 30
+oiofs_mountpoint_default_recovery_cache_directory: '/mnt/oiofs-recover'
+oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
+oiofs_mountpoint_default_redis_sentinel_cluster: []
+oiofs_mountpoint_default_retry_delay: 500
 
 ...
