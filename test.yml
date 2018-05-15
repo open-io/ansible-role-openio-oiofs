@@ -10,8 +10,8 @@
           release: "17.04"
         oiofs:
           release: "unstable"
-          user: foo
-          password: bar
+          user: "{{ lookup('env','travis_oiofs_login') }}"
+          password: "{{ lookup('env','travis_oiofs_pass') }}"
     - role: gridinit
       openio_gridinit_namespace: "{{ NS }}"
     - role: role_under_test
