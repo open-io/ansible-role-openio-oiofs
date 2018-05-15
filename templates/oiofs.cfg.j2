@@ -10,7 +10,9 @@
     "cache_size_on_flush": {{ mountpoint.cache_size_on_flush_bytes | default(oiofs_mountpoint_default_cache_size_on_flush_bytes) }},
     "cache_timeout": {{ mountpoint.cache_timeout | default(oiofs_mountpoint_default_cache_timeout) }},
     "ignore_flush": {{ mountpoint.ignore_flush | default(oiofs_mountpoint_default_ignore_flush) | lower }},
+    "fuse_max_retry": {{ mountpoint.fuse_max_retry | default(oiofs_mountpoint_default_fuse_max_retry) }},
     "log_level": "{{ mountpoint.log_level | default(oiofs_mountpoint_default_log_level) }}",
+    "max_flush_thread": {{ mountpoint.max_flush_thread | default(oiofs_mountpoint_default_max_flush_thread) }},
     "max_packed_chunks": {{ mountpoint.max_packed_chunks | default(oiofs_mountpoint_default_max_packed_chunks) }},
     "max_redis_connections": {{ mountpoint.max_redis_connections | default(oiofs_mountpoint_default_max_redis_connections) }},
 {% if mountpoint.recovery_cache_directory is defined %}
@@ -18,5 +20,6 @@
 {% endif %}
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
     "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default(oiofs_mountpoint_default_redis_sentinel_cluster) | to_json }},
-    "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) }}
+    "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) }},
+    "upload_retry_delay": {{ mountpoint.upload_retry_delay | default(oiofs_mountpoint_default_upload_retry_delay) }}
 }
