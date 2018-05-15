@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  vars:
+    NS: TRAVIS
+  roles:
+    - role: repository
+      openio_repository_products:
+        sds:
+          release: "17.04"
+        oiofs:
+          release: "unstable"
+          user: foo
+          password: bar
+    - role: gridinit
+      openio_gridinit_namespace: "{{ NS }}"
+    - role: role_under_test
+      oiofs_mountpoint_default_namespace: "{{ NS }}"
+...
