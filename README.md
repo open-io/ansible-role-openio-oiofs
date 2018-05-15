@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-oiofs.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-oiofs)
 # Ansible role `openio-oiofs`
 
 An Ansible role for the [OpenIO](http://www.openio.io) filesystem.
