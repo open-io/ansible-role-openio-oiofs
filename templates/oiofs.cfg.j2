@@ -1,7 +1,4 @@
 {
-{% if mountpoint.stats_server is defined %}
-    "stats_server": "{{ mountpoint.stats_server }}",
-{% endif %}
     "attributes_timeout": {{ mountpoint.attributes_timeout | default(oiofs_mountpoint_default_attributes_timeout) }},
     "auto_retry": {{ mountpoint.auto_retry | default(oiofs_mountpoint_default_auto_retry) | lower }},
     "cache_asynchronous": {{ mountpoint.cache_asynchronous | default(oiofs_mountpoint_default_cache_asynchronous) | lower }},
@@ -21,5 +18,8 @@
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
     "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default(oiofs_mountpoint_default_redis_sentinel_cluster) | to_json }},
     "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) }},
+{% if mountpoint.stats_server is defined %}
+    "stats_server": "{{ mountpoint.stats_server }}",
+{% endif %}
     "upload_retry_delay": {{ mountpoint.upload_retry_delay | default(oiofs_mountpoint_default_upload_retry_delay) }}
 }
