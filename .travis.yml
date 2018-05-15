@@ -1,4 +1,5 @@
 ---
+
 sudo: required
 
 env:
@@ -30,4 +31,5 @@ script:
   - yamllint .
   - ./docker-tests/docker-tests.sh
   - SUT_ID=$(docker ps -qa) ./docker-tests/functional-tests.sh
+
 ...

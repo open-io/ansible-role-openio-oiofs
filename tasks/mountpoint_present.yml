@@ -4,7 +4,7 @@
   template:
     src: "sds_ns.cfg.j2"
     dest: "{{ openio_sds_conf_directory }}/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-    force: no
+    force: false
     owner: '{{ openio_oiofs_cfg_user }}'
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
