@@ -38,7 +38,9 @@ Each mountpoint to setup can specify the following members:
 | `cache_size_bytes` | `2048000000` | Cache size in bytes |
 | `cache_size_on_flush_bytes` | `1024000000` |  |
 | `cache_timeout` | `5` | seconds between automatic cache flushes |
+| `fuse_max_retry` | `10` | Maximum number of fuse retry attempts |
 | `log_level` | `'NOTICE'` | NOTICE < INFO < DEBUG |
+| `max_flush_thread` | `10` | Maximum number of flusher threads |
 | `max_packed_chunks` | `10` |  |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name |
@@ -51,6 +53,7 @@ Each mountpoint to setup can specify the following members:
 | `fuse_options` | `['default_permissions', 'allow_other']` | List of strings: options passed to fuse with a "-o" when mounting the filesystem |
 | `fuse_flags` | `[]` | List of strings: flags passed to fuse when mounting the filesystem |
 | `recovery_cache_directory` | `'/mnt/oiofs-recover'` | Local recovery cache directory |
+| `upload_retry_delay` | `0` | Upload retry delay |
 
 ## Dependencies
 
