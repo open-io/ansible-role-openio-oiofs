@@ -11,9 +11,9 @@
     name: gridinit
   vars:
     - openio_gridinit_services:
-      - name: "oiofs-{{ mountpoint_id }}"
-        namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-        state: absent
+        - name: "oiofs-{{ mountpoint_id }}"
+          namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+          state: absent
 
 - name: 'oiofs: Remove oiofs configuration file'
   file:
