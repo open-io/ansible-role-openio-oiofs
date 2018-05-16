@@ -50,17 +50,17 @@
     name: gridinit
   vars:
     - openio_gridinit_services:
-      - name: "oiofs-{{ mountpoint_id }}"
-        namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-        state: 'present'
-        type: oiofs
-        configuration:
-          command: "oiofs-fuse -f {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
-          enabled: true
-          start_at_boot: true
-          on_die: respawn
-          uid: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
-          gid: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
-          env_PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
+        - name: "oiofs-{{ mountpoint_id }}"
+          namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
+          state: 'present'
+          type: oiofs
+          configuration:
+            command: "oiofs-fuse -f {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} -o {{ opt }} {% endfor %} {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} {{ flag }} {% endfor %} --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
+            enabled: true
+            start_at_boot: true
+            on_die: respawn
+            uid: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
+            gid: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
+            env_PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
 
 ...
