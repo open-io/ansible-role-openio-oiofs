@@ -27,7 +27,7 @@ before_install:
   - sudo pip install ansible-lint yamllint
 
 script:
-  - ansible-lint . -x ANSIBLE0016
+  - ansible-lint . -x ANSIBLE0016 -x ANSIBLE0012
   - yamllint .
   - ./docker-tests/docker-tests.sh
   - SUT_ID=$(docker ps -qa) ./docker-tests/functional-tests.sh
