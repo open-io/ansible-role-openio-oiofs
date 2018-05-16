@@ -10,18 +10,18 @@
 - name: 'oiofs: Ensure OpenIO SDS configuration directory exists'
   file:
     path: "{{ openio_sds_conf_directory }}"
-    owner: root
-    group: root
+    owner: openio
+    group: openio
     state: directory
-    mode: 0750
+    mode: 0755
 
 - name: 'oiofs: Ensure OpenIO oiofs configuration directory exists'
   file:
     path: "{{ openio_oiofs_conf_directory }}"
-    owner: root
-    group: root
+    owner: openio
+    group: openio
     state: directory
-    mode: 0750
+    mode: 0755
 
 - name: 'oiofs: Setup mountpoint'
   include_tasks: mountpoint_present.yml
