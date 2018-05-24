@@ -151,7 +151,7 @@ run_syntax_check() {
 
 run_test_playbook() {
   log 'Running playbook'
-  exec_container ansible-playbook "${test_playbook}" 
+  exec_container ansible-playbook "${test_playbook} --diff" 
   log 'Run finished'
 }
 
@@ -166,7 +166,7 @@ run_idempotence_test() {
   local output
   output="$(mktemp)"
 
-  exec_container ansible-playbook "${test_playbook}" 2>&1 | tee "${output}"
+  exec_container ansible-playbook "${test_playbook} --diff" 2>&1 | tee "${output}"
 
   if grep -q 'changed=0.*failed=0' "${output}"; then
     result='pass'
