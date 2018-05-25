@@ -46,6 +46,7 @@ Each mountpoint to setup can specify the following members:
 | `cache_size_on_flush_bytes` | `1024000000` |  |
 | `cache_timeout` | `5` | Seconds between automatic cache flushes |
 | `chunk_size` | `1048576` | Chunk size in bytes |
+| `chunk_part_size` | `1048576` | Chunk part size in bytes (only useful if `recovery_cache_directory` is given |
 | `fuse_max_retry` | `10` | Maximum number of fuse retry attempts |
 | `ignore_flush` | `true` | Ignore flushes |
 | `inode_by_container` | `65536` | Maximum number of inodes per container |
