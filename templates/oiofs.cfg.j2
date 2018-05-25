@@ -15,8 +15,12 @@
 {% if mountpoint.recovery_cache_directory is defined %}
     "recovery_cache_directory": "{{ mountpoint.recovery_cache_directory }}",
 {% endif %}
+{% if mountpoint.redis_sentinel_cluster is defined %}
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
-    "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | default(oiofs_mountpoint_default_redis_sentinel_cluster) | to_json }},
+    "redis_sentinel_server": {{ mountpoint.redis_sentinel_cluster | to_json }},
+{% else %}
+    "redis_server": "{{ mountpoint.redis_server | default(oiofs_mountpoint_default_redis_server) }}",
+{% endif %}
     "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) | int | to_json }},
 {% if mountpoint.stats_server is defined %}
     "stats_server": "{{ mountpoint.stats_server }}",

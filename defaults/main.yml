@@ -41,7 +41,7 @@ oiofs_mountpoint_default_max_flush_thread: 10
 oiofs_mountpoint_default_max_packed_chunks: 10
 oiofs_mountpoint_default_max_redis_connections: 30
 oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
-oiofs_mountpoint_default_redis_sentinel_cluster: []
+oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_upload_retry_delay: 0
 

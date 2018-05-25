@@ -55,11 +55,19 @@ Each mountpoint to setup can specify the following members:
 | `max_redis_connections` | `30` | Maximum number of connections to redis cluster |
 | `recovery_cache_directory` | `'/mnt/oiofs-recover'` | Local recovery cache directory |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name |
-| `redis_sentinel_cluster` | `[]` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
+| `redis_sentinel_cluster` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
+| `redis_server | `'127.0.0.1:6379'` | Single standalone redis server |
 | `retry_delay` | `500` |  |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `upload_retry_delay` | `0` | Upload retry delay |
+
+*NOTE*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You have
+to choose between a standalone redis server or a redis-sentinel cluster. In case
+nothing is specified, a local standalone redis server is used.
+
+*NOTE*: Don't forget to give `redis_sentinel_name` if the default value does not
+suit your platform.
 
 ## Dependencies
 
