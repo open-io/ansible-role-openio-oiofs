@@ -1,0 +1,7 @@
+---
+
+openio_oiofs_packages:
+  - openio-sds-server
+  - oiofs-fuse
+
+...
