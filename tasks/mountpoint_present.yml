@@ -17,8 +17,14 @@
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
 
+- name: Check if OIOFS is already present in container
+  command: 'openio reference show {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} --oio-account {{ mountpoint.account | default(oiofs_mountpoint_default_account) }} --oio-ns {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }} -c meta.oiofs_chunk_size'
+  register: oiofs_mkfsed
+  ignore_errors: true
+
 - name: "oiofs: Create the filesystem inside container"
   shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
+  when: oiofs_mkfsed.rc != 0 or (mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs))
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:

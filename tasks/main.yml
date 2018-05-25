@@ -1,6 +1,11 @@
 ---
 # tasks file for ansible-role-oiofs
 
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
 - name: 'oiofs: Install packages'
   package:
     name: "{{ item }}"

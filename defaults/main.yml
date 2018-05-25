@@ -1,9 +1,6 @@
 ---
 # defaults file for ansible-role-oiofs
 
-openio_oiofs_packages:
-  - oiofs-fuse
-
 openio_oiofs_conf_directory: '/etc/oio/oiofs.conf.d'
 openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 
