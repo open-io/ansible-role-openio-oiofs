@@ -23,7 +23,7 @@
   ignore_errors: true
 
 - name: "oiofs: Create the filesystem inside container"
-  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
+  shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json -v {% if mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs) %} -f {% endif %} -u {{ mountpoint.user | default(oiofs_mountpoint_default_user) }} -g {{ mountpoint.group | default(oiofs_mountpoint_default_group) }} -m {{ mountpoint.mode | default(oiofs_mountpoint_default_mode) }} -c {{ mountpoint.chunk_size | default(oiofs_mountpoint_default_chunk_size) }} -i  {{ mountpoint.inode_by_container | default(oiofs_mountpoint_default_inode_by_container) }} {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/{{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/{{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
   when: oiofs_mkfsed.rc != 0 or (mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs))
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
