@@ -9,6 +9,21 @@
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
 
+- name: 'Check given mountpoint redis config: not more than one'
+  fail:
+    msg: 'You can only specify one of: `redis_server` or `redis_sentinel_cluster` per mountpoint'
+  when:
+    - mountpoint.redis_server is defined
+    - mountpoint.redis_sentinel_cluster is defined
+
+- name: 'Check given mountpoint redis config: cluster cannot be empty'
+  fail:
+    msg: 'If you specify a `redis_sentinel_cluster`, it cannot be empty'
+  when:
+    - mountpoint.redis_server is not defined
+    - mountpoint.redis_sentinel_cluster is defined
+    - (mountpoint.redis_sentinel_cluster | length) < 1
+
 - name: 'oiofs: Setup oiofs configuration'
   template:
     src: "oiofs.cfg.j2"
