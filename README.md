@@ -4,7 +4,8 @@
 An Ansible role for the [OpenIO](http://www.openio.io) filesystem.
 This role installs and configures OpenIO oiofs.
 
-If you like/use this role, please consider giving it a star on github or reviewing it on Ansible Galaxy. Thanks!
+If you like/use this role, please consider giving it a star on github or
+reviewing it on Ansible Galaxy. Thanks!
 
 ## Requirements
 
@@ -63,9 +64,9 @@ Each mountpoint to setup can specify the following members:
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `upload_retry_delay` | `0` | Upload retry delay |
 
-*NOTE*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You have
-to choose between a standalone redis server or a redis-sentinel cluster. In case
-nothing is specified, a local standalone redis server is used.
+*NOTE*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You
+have to choose between a standalone redis server or a redis-sentinel cluster. In
+case nothing is specified, a local standalone redis server is used.
 
 *NOTE*: Don't forget to give `redis_sentinel_name` if the default value does not
 suit your platform.
@@ -76,7 +77,8 @@ This role also requires the presence of the following roles in your ansible `rol
 - [ansible-role-openio-repository](https://github.com/open-io/ansible-role-openio-repository)
 - [ansible-role-openio-gridinit](https://github.com/open-io/ansible-role-openio-gridinit)
 
-For oiofs repository setup you'll need to add some variables for the role, like in the following playbook snippet:
+For oiofs repository setup you'll need to add some variables for the role, like
+in the following playbook snippet:
 
 ```
   tasks:
@@ -110,7 +112,12 @@ This may also be included in your playbook. See example below.
 
 ## Example Playbook
 
-This example assumes an ansible inventory with specific host groups (`openio_conscience`, `openio_oiofs`, `openio_redis_cluster`, `openio_directory_m0`).
+This example assumes an ansible inventory with specific host groups:
+
+* `openio_conscience`
+* `openio_oiofs`
+* `openio_redis_cluster`
+* `openio_directory_m0`
 
 ```
 ---
@@ -209,9 +216,13 @@ This example assumes an ansible inventory with specific host groups (`openio_con
 
 ## Contributing
 
-Issues, feature requests, ideas are appreciated and can be posted in the [Issues](https://github.com/open-io/ansible-role-openio-oiofs/issues) section.
+Issues, feature requests, ideas are appreciated and can be posted in the
+[Issues](https://github.com/open-io/ansible-role-openio-oiofs/issues) section.
 
-Pull requests are also very welcome. The best way to submit a PR is by first creating a fork of this Github project, then creating a topic branch for the suggested change and pushing that branch to your own fork. Github can then easily create a PR based on that branch.
+Pull requests are also very welcome. The best way to submit a PR is by first
+creating a fork of this Github project, then creating a topic branch for the
+suggested change(s) and pushing that branch to your own fork. Github can then
+easily create a PR based on that branch.
 
 ## License
 
