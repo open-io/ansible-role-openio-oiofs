@@ -55,6 +55,7 @@ Each mountpoint to setup can specify the following members:
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name |
 | `redis_sentinel_cluster` | `[]` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
 | `retry_delay` | `500` |  |
+| `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `upload_retry_delay` | `0` | Upload retry delay |
 
