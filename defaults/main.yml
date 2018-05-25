@@ -14,6 +14,7 @@ oiofs_mountpoints: []
 
 oiofs_mountpoint_default_container: 'test_container'
 oiofs_mountpoint_default_account: 'test_account'
+oiofs_mountpoint_default_start_at_boot: true
 oiofs_mountpoint_default_namespace: 'OPENIO'
 oiofs_mountpoint_default_oioproxy_host: '127.0.0.1'
 oiofs_mountpoint_default_oioproxy_port: 6006
