@@ -22,6 +22,8 @@ oiofs_mountpoint_default_group: 'root'
 oiofs_mountpoint_default_mode: '0755'
 oiofs_mountpoint_default_fuse_options: ['default_permissions', 'allow_other']
 oiofs_mountpoint_default_fuse_flags: []
+oiofs_mountpoint_default_chunk_size: 1048576
+oiofs_mountpoint_default_inode_by_container: 65536
 
 # Those are for the template: oiofs.cfg.j2
 # See documentation at: https://github.com/open-io/oio-fs/blob/master/CONF.md
