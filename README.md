@@ -124,12 +124,14 @@ This example assumes an ansible inventory with specific host groups:
 
 - name: Configure OpenIO SDS package repository
   hosts: all
+  become: true
 
   roles:
     - { role: ansible-role-openio-repository }
 
 - name: Create the account for OpenIO oiofs
   hosts: all
+  become: true
   vars:
     openio_namespace: OPENIO
 
@@ -148,6 +150,7 @@ This example assumes an ansible inventory with specific host groups:
 
 - name: Install and configure OpenIO oiofs repository
   hosts: openio_oiofs
+  become: true
 
   tasks:
     - name: "Apply 'ansible-role-openio-repository' role"
@@ -162,6 +165,8 @@ This example assumes an ansible inventory with specific host groups:
 
 - name: Install and configure OpenIO oiofs
   hosts: all
+  become: true
+
   vars:
     openio_iface: 'eth0'
     # Use the redis-sentinel cluster from OpenIO SDS (because it will be sufficient)
