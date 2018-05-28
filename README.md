@@ -84,12 +84,13 @@ in the following playbook snippet:
   tasks:
     - name: "Setup oiofs repository"
       include_role:
-          name: ansible-role-openio-repository
+        name: ansible-role-openio-repository
       vars:
-          openio_sds_release: 'unstable'
-          openio_sds_repo_product: 'oiofs'
-          openio_sds_repo_user: 'oiofs'
-          openio_sds_repo_pass: 'THE_MIRROR_PASSWORD'
+        openio_repository_products:
+          oiofs:
+            release: 'unstable'
+            user: 'oiofs'
+            password: 'THE_MIRROR_PASSWORD'
 ```
 
 You'll need to create an account for each namespace used for oiofs, for example:
@@ -141,7 +142,7 @@ This example assumes an ansible inventory with specific host groups:
       when: inventory_hostname == groups["openio_conscience"][0]
       register: account_status
       ignore_errors: yes
-  
+
     - name: 'Create account for oiofs'
       shell: "openio --oio-ns {{ openio_namespace }} account create test_account"
       when:
@@ -153,15 +154,15 @@ This example assumes an ansible inventory with specific host groups:
   become: true
 
   tasks:
-    - name: "Apply 'ansible-role-openio-repository' role"
+    - name: "Setup oiofs repository"
       include_role:
-          name: ansible-role-openio-repository
+        name: ansible-role-openio-repository
       vars:
-          # Get latest build for now, from unstable repo
-          openio_sds_release: 'unstable'
-          openio_sds_repo_product: 'oiofs'
-          openio_sds_repo_user: 'oiofs'
-          openio_sds_repo_pass: 'THE_MIRROR_PASSWORD'
+        openio_repository_products:
+          oiofs:
+            release: 'unstable'
+            user: 'oiofs'
+            password: 'THE_MIRROR_PASSWORD'
 
 - name: Install and configure OpenIO oiofs
   hosts: all
