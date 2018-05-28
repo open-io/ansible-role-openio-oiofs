@@ -145,8 +145,8 @@ This example assumes an ansible inventory with specific host groups:
     - name: 'Create account for oiofs'
       shell: "openio --oio-ns {{ openio_namespace }} account create test_account"
       when:
-        - account_status.rc != 0
         - inventory_hostname == groups["openio_conscience"][0]
+        - hostvars[inventory_hostname].account_status.rc != 0
 
 - name: Install and configure OpenIO oiofs repository
   hosts: openio_oiofs
