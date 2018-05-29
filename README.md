@@ -11,8 +11,16 @@ reviewing it on Ansible Galaxy. Thanks!
 
 This role supports Centos 7 and Ubuntu 16.04 Xenial.
 
-The role assumes a local ECD daemon listening on `localhost:6017`, do not forget
-to give its address if the default does not suit your deployment. 
+The role assumes a local `oioproxy` daemon listening on `localhost:6006`, do not
+forget to specify its address if the default does not suit your deployment. 
+
+The role assumes a local `ECD` daemon listening on `localhost:6017`, do not
+forget to specify its address if the default does not suit your deployment. 
+
+The role assumes a local & standalone `redis` daemon listening on `localhost:6379`,
+do not forget to specify its address if the default does not suit your deployment.
+Alternatively you can use a `redis-sentinel` cluster. See below for configuration
+details.
 
 ## Role Variables
 
