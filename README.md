@@ -98,21 +98,6 @@ This role also requires the presence of the following roles in your ansible `rol
 - [ansible-role-openio-repository](https://github.com/open-io/ansible-role-openio-repository)
 - [ansible-role-openio-gridinit](https://github.com/open-io/ansible-role-openio-gridinit)
 
-For oiofs repository setup you'll need to add some variables for the role, like
-in the following playbook snippet:
-
-```
-  tasks:
-    - name: "Setup oiofs repository"
-      include_role:
-        name: ansible-role-openio-repository
-      vars:
-        openio_repository_products:
-          oiofs:
-            release: 'unstable'
-            user: 'oiofs'
-            password: 'THE_MIRROR_PASSWORD'
-```
 
 You'll need to create an account for each namespace used for oiofs, for example:
 
@@ -130,16 +115,7 @@ oiofs_mountpoints:
     [...]
 ```
 
-This may also be included in your playbook. See example below.
-
 ## Example Playbook
-
-This example assumes an ansible inventory with specific host groups:
-
-* `openio_conscience`
-* `openio_oiofs`
-* `openio_redis_cluster`
-* `openio_directory_m0`
 
 ```
 ---
@@ -169,8 +145,6 @@ This example assumes an ansible inventory with specific host groups:
           - path: '/mnt/oiofs/mnt'
             cache_directory: '/mnt/oiofs/cache'
             state: 'present'
-            account: 'test_account'
-            container: 'test_container'
 
 ...
 ```
