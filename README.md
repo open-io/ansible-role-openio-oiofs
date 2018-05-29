@@ -141,18 +141,15 @@ This example assumes an ansible inventory with specific host groups:
 * `openio_redis_cluster`
 * `openio_directory_m0`
 
+The first play may not be strictly necessary if you already created the right
+account(s) before running the oiofs role. You may skip them in that case. And
+neither the `openio_conscience` inventory host group will be required.
+
 ```
 ---
 
-- name: Configure OpenIO SDS package repository
-  hosts: all
-  become: true
-
-  roles:
-    - { role: ansible-role-openio-repository }
-
 - name: Create the account for OpenIO oiofs
-  hosts: all
+  hosts: openio_conscience
   become: true
   vars:
     openio_namespace: OPENIO
@@ -191,6 +188,7 @@ This example assumes an ansible inventory with specific host groups:
 
   vars:
     openio_iface: 'eth0'
+    openio_namespace: OPENIO
     # Use the redis-sentinel cluster from OpenIO SDS (because it will be sufficient)
     redis_sentinel_cluster: '[ {% for ip in groups["openio_redis_cluster"] | map("extract", hostvars, ["ansible_" + openio_iface, "ipv4", "address"]) %} "{{ ip }}:6012", {% endfor %} ]'
     # Use the oioproxy from the m0 host (any oioproxy from the SDS cluster would do)
