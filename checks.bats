@@ -27,6 +27,7 @@
   [[ "${status}" -eq "0" ]]
 }
 
+
 @test 'Object is present on SDS' {
   run bash -c "docker exec -ti ${SUT_ID} openio container show travis_container --oio-account travis_project --oio-ns OPENIO -c objects -f yaml"
   echo "output: "$output
@@ -41,6 +42,7 @@
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
 }
+
 
 @test 'Object is absent on SDS' {
   run bash -c "docker exec -ti ${SUT_ID} openio container show travis_container --oio-account travis_project --oio-ns OPENIO -c objects -f yaml"
