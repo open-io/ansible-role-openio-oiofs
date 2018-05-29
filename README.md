@@ -95,9 +95,9 @@ suit your platform.
 ## Dependencies
 
 This role also requires the presence of the following roles in your ansible `roles` directory:
+
 - [ansible-role-openio-repository](https://github.com/open-io/ansible-role-openio-repository)
 - [ansible-role-openio-gridinit](https://github.com/open-io/ansible-role-openio-gridinit)
-
 
 You'll need to create an account for each namespace used for oiofs, for example:
 
@@ -109,7 +109,7 @@ And then you can use `test_account` in
 
 ```
 oiofs_mountpoints:
-  - path: "THE_TARGET_PATH"
+  - path: "/mnt/oiofs/mnt"
     [...]
     account: test_account
     [...]
