@@ -221,10 +221,6 @@ This example assumes an ansible inventory with specific host groups:
             oioproxy_host: "{{ oioproxy_hosts[0] }}"
             redis_sentinel_cluster: "{{ redis_sentinel_cluster }}"
 
-            fuse_options:
-              - default_permissions
-              - allow_other
-
           - path: "/mnt/oiofs-3/mnt"
             state: 'absent'
 
