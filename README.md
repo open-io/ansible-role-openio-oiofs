@@ -11,16 +11,24 @@ reviewing it on Ansible Galaxy. Thanks!
 
 This role supports Centos 7 and Ubuntu 16.04 Xenial.
 
-The role assumes a local `oioproxy` daemon listening on `localhost:6006`, do not
-forget to specify its address if the default does not suit your deployment. 
+The role **defaults** to use the following services, which should be deployed
+before using the oiofs role:
 
-The role assumes a local `ECD` daemon listening on `localhost:6017`, do not
-forget to specify its address if the default does not suit your deployment. 
+- a local `oioproxy` daemon listening on `localhost:6006`
+- a local `ECD` daemon listening on `localhost:6017`
+- a local & standalone `redis` daemon listening on `localhost:6379`
 
-The role assumes a local & standalone `redis` daemon listening on `localhost:6379`,
-do not forget to specify its address if the default does not suit your deployment.
-Alternatively you can use a `redis-sentinel` cluster. See below for configuration
-details.
+You can specify different adresses and/or ports for each of those service
+dependencies if the default values do not suit your deployment. For example, if
+they are not running on the same host as oiofs itself.
+
+The `ECD` service should only be necessary if you are using an erasure coding
+policy. The default values are harmless otherwise.
+
+Instead of the standalone `redis` service, you can use a `redis-sentinel`
+cluster for higher availability / resiliency.
+
+See below for configuration details.
 
 ## Role Variables
 
