@@ -11,6 +11,9 @@ reviewing it on Ansible Galaxy. Thanks!
 
 This role supports Centos 7 and Ubuntu 16.04 Xenial.
 
+The role assumes a local ECD daemon listening on `localhost:6017`, do not forget
+to give its address if the default does not suit your deployment. 
+
 ## Role Variables
 
 | Variable											| Default					| Comments (type) |
@@ -32,6 +35,8 @@ Each mountpoint to setup can specify the following members:
 | `namespace` | `'OPENIO'` | SDS namespace |
 | `oioproxy_host` | `'127.0.0.1'` | SDS oioproxy hostname or IP address |
 | `oioproxy_port` | `6006` | SDS oioproxy port |
+| `ecd_host` | `'127.0.0.1'` | SDS ecd hostname or IP address |
+| `ecd_port` | `6017` | SDS ecd port |
 | `force_mkfs` | `false` | In case the container already had an oiofs inside |
 | `cache_action` | `'flush'` |  'flush': use previous cache content / 'erase': forget previous cache content |
 | `user` | `root` |  |

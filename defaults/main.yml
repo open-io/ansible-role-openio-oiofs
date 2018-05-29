@@ -15,6 +15,8 @@ oiofs_mountpoint_default_start_at_boot: true
 oiofs_mountpoint_default_namespace: 'OPENIO'
 oiofs_mountpoint_default_oioproxy_host: '127.0.0.1'
 oiofs_mountpoint_default_oioproxy_port: 6006
+oiofs_mountpoint_default_ecd_host: '127.0.0.1'
+oiofs_mountpoint_default_ecd_port: 6017
 oiofs_mountpoint_default_cache_action: 'flush'  # 'flush' / 'erase'
 oiofs_mountpoint_default_force_mkfs: false
 oiofs_mountpoint_default_user: 'root'
