@@ -25,11 +25,14 @@ before_install:
   - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py --create-dirs -o library/gridinitcmd.py
   - sudo pip install --upgrade pip
   - sudo pip install ansible-lint yamllint
+  - export IPVAGRANT=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+  - docker run -d --net=host -e OPENIO_IPADDR=${IPVAGRANT} openio/sds
+  - export SDS_DOCKER_ID=$(docker ps -aq)
+  - docker exec -ti ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project
 
 script:
-  - ansible-lint . -x ANSIBLE0016 -x ANSIBLE0012
+  - ansible-lint . -x ANSIBLE0016
   - yamllint .
   - ./docker-tests/docker-tests.sh
-  - SUT_ID=$(docker ps -qa) ./docker-tests/functional-tests.sh
-
+  - SUT_ID=$(docker ps -qa | head -n 1) ./docker-tests/functional-tests.sh
 ...

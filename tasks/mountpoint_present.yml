@@ -35,6 +35,7 @@
 - name: Check if OIOFS is already present in container
   command: 'openio reference show {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} --oio-account {{ mountpoint.account | default(oiofs_mountpoint_default_account) }} --oio-ns {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }} -c meta.oiofs_chunk_size'
   register: oiofs_mkfsed
+  changed_when: false
   ignore_errors: true
 
 - name: "oiofs: Create the filesystem inside container"
@@ -70,6 +71,7 @@
   include_role:
     name: gridinit
   vars:
+    - openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*"
     - openio_gridinit_services:
         - name: "oiofs-{{ mountpoint_id }}"
           namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
