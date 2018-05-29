@@ -1,3 +1,4 @@
 # {{ ansible_managed }}
 [{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}]
 proxy={{ mountpoint.oioproxy_host | default(oiofs_mountpoint_default_oioproxy_host) }}:{{ mountpoint.oioproxy_port | default(oiofs_mountpoint_default_oioproxy_port) }}
+ecd={{ mountpoint.ecd_host | default(oiofs_mountpoint_default_ecd_host) }}:{{ mountpoint.ecd_port | default(oiofs_mountpoint_default_ecd_port) }}
