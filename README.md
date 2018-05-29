@@ -141,34 +141,11 @@ This example assumes an ansible inventory with specific host groups:
 * `openio_redis_cluster`
 * `openio_directory_m0`
 
-The first play may not be strictly necessary if you already created the right
-account(s) before running the oiofs role. You may skip them in that case. And
-neither the `openio_conscience` inventory host group will be required.
-
 ```
 ---
 
-- name: Create the account for OpenIO oiofs
-  hosts: openio_conscience
-  become: true
-  vars:
-    openio_namespace: OPENIO
-
-  tasks:
-    - name: 'Check account pre-existence'
-      shell: "openio --oio-ns {{ openio_namespace }} account show test_account"
-      when: inventory_hostname == groups["openio_conscience"][0]
-      register: account_status
-      ignore_errors: yes
-
-    - name: 'Create account for oiofs'
-      shell: "openio --oio-ns {{ openio_namespace }} account create test_account"
-      when:
-        - inventory_hostname == groups["openio_conscience"][0]
-        - hostvars[inventory_hostname].account_status.rc != 0
-
-- name: Install and configure OpenIO oiofs repository
-  hosts: openio_oiofs
+- name: "Install and configure OpenIO oiofs & SDS repositories"
+  hosts: oiofs
   become: true
 
   tasks:
@@ -177,60 +154,23 @@ neither the `openio_conscience` inventory host group will be required.
         name: ansible-role-openio-repository
       vars:
         openio_repository_products:
+          sds:
+            release: '17.04'
           oiofs:
-            release: 'unstable'
+            release: '17.04'
             user: 'oiofs'
             password: 'THE_MIRROR_PASSWORD'
 
-- name: Install and configure OpenIO oiofs
-  hosts: all
-  become: true
-
-  vars:
-    openio_iface: 'eth0'
-    openio_namespace: OPENIO
-    # Use the redis-sentinel cluster from OpenIO SDS (because it will be sufficient)
-    redis_sentinel_cluster: '[ {% for ip in groups["openio_redis_cluster"] | map("extract", hostvars, ["ansible_" + openio_iface, "ipv4", "address"]) %} "{{ ip }}:6012", {% endfor %} ]'
-    # Use the oioproxy from the m0 host (any oioproxy from the SDS cluster would do)
-    oioproxy_hosts: "{{ groups['openio_directory_m0'] | map('extract', hostvars, ['ansible_' + openio_iface, 'ipv4', 'address']) | list }}"
-
-  tasks:
-    - name: "Apply 'ansible-role-openio-oiofs' role on a node from the SDS cluster"
+    - name: "Apply 'ansible-role-openio-oiofs' role"
       include_role:
           name: ansible-role-openio-oiofs
       vars:
         oiofs_mountpoints:
-          - path: "/mnt/oiofs-2/mnt"
+          - path: '/mnt/oiofs/mnt'
+            cache_directory: '/mnt/oiofs/cache'
             state: 'present'
             account: 'test_account'
-            cache_directory: /mnt/oiofs-2/cache
-            container: test_container_2
-            force_mkfs: false
-            log_level: "INFO" # NOTICE < INFO < DEBUG
-            oioproxy_host: "{{ oioproxy_hosts[0] }}"
-            redis_sentinel_cluster: "{{ redis_sentinel_cluster }}"
-
-      when: inventory_hostname == "oio_3"
-
-    - name: "Apply 'ansible-role-openio-oiofs' role on a standalone oiofs node"
-      include_role:
-          name: ansible-role-openio-oiofs
-      vars:
-        oiofs_mountpoints:
-          - path: "/mnt/oiofs-1/mnt"
-            state: 'present'
-            account: 'test_account'
-            cache_directory: /mnt/oiofs-1/cache
-            container: test_container_1
-            force_mkfs: true
-            log_level: "INFO" # NOTICE < INFO < DEBUG
-            oioproxy_host: "{{ oioproxy_hosts[0] }}"
-            redis_sentinel_cluster: "{{ redis_sentinel_cluster }}"
-
-          - path: "/mnt/oiofs-3/mnt"
-            state: 'absent'
-
-      when: inventory_hostname == "oio_4"
+            container: 'test_container'
 
 ...
 ```
