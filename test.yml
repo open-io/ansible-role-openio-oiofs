@@ -9,11 +9,24 @@
         sds:
           release: "17.04"
         oiofs:
-          release: "unstable"
+          release: "17.04"
           user: "{{ lookup('env','travis_oiofs_login') }}"
           password: "{{ lookup('env','travis_oiofs_pass') }}"
     - role: gridinit
       openio_gridinit_namespace: "{{ NS }}"
+      openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*"
     - role: role_under_test
-      oiofs_mountpoint_default_namespace: "{{ NS }}"
+      oiofs_mountpoints:
+        - path: /mnt/oiofs-1/mnt
+          state: present
+          account: travis_project
+          cache_directory: /mnt/oiofs-1/cache
+          container: travis_container
+          #force_mkfs: true
+          log_level: INFO
+          oioproxy_host: "{{ lookup('env','IPVAGRANT') }}"
+          redis_server: "{{ lookup('env','IPVAGRANT') }}:6011"
+          fuse_options:
+            - default_permissions
+            - allow_other
 ...
