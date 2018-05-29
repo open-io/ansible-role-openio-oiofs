@@ -9,7 +9,7 @@
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "/mnt/oiofs-1/mnt " ]]
+  [[ "${output}" =~ "/mnt/oiofs-1/mnt" ]]
 }
 
 @test 'gridinit resource is UP' {
