@@ -28,8 +28,7 @@ before_install:
   - export IPVAGRANT=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
   - docker run -d --net=host -e OPENIO_IPADDR=${IPVAGRANT} openio/sds
   - export SDS_DOCKER_ID=$(docker ps -aq)
-  - sleep 30
-  - docker exec -ti ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project
+  - while ! docker exec -ti ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project; do sleep 1; done
 
 script:
   - ansible-lint . -x ANSIBLE0016
