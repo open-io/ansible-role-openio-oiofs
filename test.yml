@@ -29,4 +29,7 @@
           fuse_options:
             - default_permissions
             - allow_other
+          # for CI only
+          cache_timeout: 0
+          ignore_flush: false
 ...
