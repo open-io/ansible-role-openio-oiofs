@@ -41,14 +41,14 @@ oiofs_mountpoint_default_cache_size_on_flush_bytes: 1024000000
 oiofs_mountpoint_default_cache_timeout: 5
 oiofs_mountpoint_default_chunk_part_size: 1048576
 oiofs_mountpoint_default_ignore_flush: true
-oiofs_mountpoint_default_fuse_max_retry: 10
+oiofs_mountpoint_default_fuse_max_retries: 10
 oiofs_mountpoint_default_log_level: 'NOTICE'  # 'NOTICE' < 'INFO' < 'DEBUG'
-oiofs_mountpoint_default_max_flush_thread: 10
+oiofs_mountpoint_default_max_flush_threads: 10
 oiofs_mountpoint_default_max_packed_chunks: 10
 oiofs_mountpoint_default_max_redis_connections: 30
 oiofs_mountpoint_default_on_die: 'respawn'
 oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
-oiofs_mountpoint_default_upload_retry_delay: 0
+oiofs_mountpoint_default_sds_retry_delay: 0
 ...
