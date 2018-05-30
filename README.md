@@ -69,22 +69,22 @@ Each mountpoint to setup can specify the following members:
 | `cache_timeout` | `5` | Seconds between automatic cache flushes |
 | `chunk_size` | `1048576` | Chunk size in bytes (only used at mkfs.oiofs time) |
 | `chunk_part_size` | `1048576` | Chunk part size in bytes (only useful if `recovery_cache_directory` is given |
-| `fuse_max_retry` | `10` | Maximum number of fuse retry attempts |
+| `fuse_max_retries` | `10` | Maximum number of fuse retry attempts |
 | `ignore_flush` | `true` | Ignore flushes |
 | `inode_by_container` | `65536` | Maximum number of inodes per container (only used at mkfs.oiofs time) |
 | `log_level` | `'NOTICE'` | NOTICE < INFO < DEBUG |
-| `max_flush_thread` | `10` | Maximum number of flusher threads |
+| `max_flush_threads` | `10` | Maximum number of flusher threads |
 | `max_packed_chunks` | `10` |  |
 | `max_redis_connections` | `30` | Maximum number of connections to redis cluster |
 | `on_die` | `'respawn'` | What to do when the service handling this mountpoint dies (see *Note 3* below for details) |
 | `recovery_cache_directory` | `` | Local recovery cache directory, if any is to be used |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name (see *Notes 1 & 2* below for details) |
-| `redis_sentinel_cluster` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
+| `redis_sentinel_servers` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
 | `redis_server | `'127.0.0.1:6379'` | Single standalone redis server (see *Note 1* below for details) |
 | `retry_delay` | `500` |  |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
-| `upload_retry_delay` | `0` | Upload retry delay |
+| `sds_retry_delay` | `0` | SDS actions retry delay |
 
 *NOTE 1*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You
 have to choose between a standalone redis server or a redis-sentinel cluster. In
