@@ -22,7 +22,10 @@ oiofs_mountpoint_default_force_mkfs: false
 oiofs_mountpoint_default_user: 'root'
 oiofs_mountpoint_default_group: 'root'
 oiofs_mountpoint_default_mode: '0755'
-oiofs_mountpoint_default_fuse_options: ['default_permissions', 'allow_other']
+oiofs_mountpoint_default_fuse_options:
+  - default_permissions
+  - allow_other
+  - auto_unmount
 oiofs_mountpoint_default_fuse_flags: []
 oiofs_mountpoint_default_chunk_size: 1048576
 oiofs_mountpoint_default_inode_by_container: 65536
@@ -47,5 +50,4 @@ oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_names
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_upload_retry_delay: 0
-
 ...

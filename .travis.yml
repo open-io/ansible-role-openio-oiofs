@@ -22,17 +22,19 @@ before_install:
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
   - git fetch origin docker-tests
   - git worktree add docker-tests origin/docker-tests
-  - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py --create-dirs -o library/gridinitcmd.py
+  - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py \
+    --create-dirs -o library/gridinitcmd.py
   - sudo pip install --upgrade pip
   - sudo pip install ansible-lint yamllint
   - export IPVAGRANT=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
   - docker run -d --net=host -e OPENIO_IPADDR=${IPVAGRANT} openio/sds
   - export SDS_DOCKER_ID=$(docker ps -aq)
-  - while ! docker exec -ti ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project; do sleep 1; done
+  - docker exec -ti \
+    ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project
 
 script:
   - ansible-lint . -x ANSIBLE0016
-  - yamllint .
+  - yamllint -c .yamllint -s $(find . -type f ! -name ".travis.yml" -a -name "*.yml")
   - ./docker-tests/docker-tests.sh
   - SUT_ID=$(docker ps -qa | head -n 1) ./docker-tests/functional-tests.sh
 ...
