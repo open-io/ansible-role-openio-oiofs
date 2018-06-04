@@ -1,16 +1,17 @@
 ---
-ignore:
-  env/**/*
+ignore: |
+  roles
+  archives
 rules:
   braces:
     level: error
-    min-spaces-inside: 0
+    min-spaces-inside: 1
     max-spaces-inside: 1
     min-spaces-inside-empty: 0
     max-spaces-inside-empty: 0
   brackets:
     level: error
-    min-spaces-inside: 0
+    min-spaces-inside: 1
     max-spaces-inside: 1
     min-spaces-inside-empty: 0
     max-spaces-inside-empty: 0
@@ -55,7 +56,7 @@ rules:
   key-ordering: disable
   line-length:
     level: error
-    max: 999
+    max: 120
     allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: false
   new-line-at-end-of-file: enable
