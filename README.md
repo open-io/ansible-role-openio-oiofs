@@ -150,6 +150,51 @@ oiofs_mountpoints:
 ...
 ```
 
+Another, more involved, one:
+
+```
+---
+
+- name: "Install and configure OpenIO oiofs & SDS repositories"
+  hosts: oiofs
+  become: true
+
+  tasks:
+    - name: "Setup oiofs repository"
+      include_role:
+        name: ansible-role-openio-repository
+      vars:
+        openio_repository_products:
+          sds:
+            release: '17.04'
+          oiofs:
+            release: '17.04'
+            user: 'oiofs'
+            password: 'THE_MIRROR_PASSWORD'
+
+    - name: "Apply 'ansible-role-openio-oiofs' role"
+      include_role:
+          name: ansible-role-openio-oiofs
+      vars:
+        oiofs_mountpoints:
+          - path: '/mnt/oiofs-1/mnt'
+            cache_directory: '/mnt/oiofs-1/cache'
+            recovery_cache_directory: '/mnt/oiofs-1/recovery'
+            state: 'present'
+            account: 'test_account'
+            container: 'test_container'
+            log_level: 'INFO'
+            oioproxy_host: '172.17.0.2'
+            ecd_host: '172.17.0.2'
+            redis_sentinel_servers: ['192.168.0.123:6012', '192.168.0.124:6012', '192.168.0.125:6012']
+            redis_sentinel_name: 'OPENIO-master-1'
+            fuse_options:
+              - 'default_permissions'
+              - 'allow_other'
+
+...
+```
+
 ## Contributing
 
 Issues, feature requests, ideas are appreciated and can be posted in the
