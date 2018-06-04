@@ -10,7 +10,7 @@
 - name: 'oiofs: Install packages'
   package:
     name: "{{ item }}"
-    state: installed
+    state: present
   with_items: "{{ openio_oiofs_packages }}"
 
 - name: 'oiofs: Ensure OpenIO SDS configuration directory exists'
