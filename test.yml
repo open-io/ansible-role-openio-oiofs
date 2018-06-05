@@ -8,10 +8,10 @@
       openio_repository_products:
         sds:
           release: "17.04"
-        oiofs:
+        oiofs-travis:
           release: "17.04"
-          user: "{{ lookup('env','travis_oiofs_login') }}"
-          password: "{{ lookup('env','travis_oiofs_pass') }}"
+          user: travisoiofs_id
+          password: NehnXW4ErUEMYu8Sndju65n
     - role: gridinit
       openio_gridinit_namespace: "{{ NS }}"
       openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*"
@@ -26,9 +26,6 @@
           log_level: INFO
           oioproxy_host: "{{ lookup('env','IPVAGRANT') }}"
           redis_server: "{{ lookup('env','IPVAGRANT') }}:6011"
-          fuse_options:
-            - default_permissions
-            - allow_other
           # for CI only
           cache_timeout: 0
           ignore_flush: false
