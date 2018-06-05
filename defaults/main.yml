@@ -21,7 +21,7 @@ oiofs_mountpoint_default_cache_action: 'flush'  # 'flush' / 'erase'
 oiofs_mountpoint_default_force_mkfs: false
 oiofs_mountpoint_default_user: 'root'
 oiofs_mountpoint_default_group: 'root'
-oiofs_mountpoint_default_mode: '0755'
+oiofs_mountpoint_default_mode: '0750'
 oiofs_mountpoint_default_fuse_options:
   - default_permissions
   - allow_other
