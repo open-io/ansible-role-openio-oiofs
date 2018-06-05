@@ -20,14 +20,14 @@ before_install:
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
   - git fetch origin docker-tests
   - git worktree add docker-tests origin/docker-tests
-  - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py \
+  - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py
     --create-dirs -o library/gridinitcmd.py
   - sudo pip install --upgrade pip
   - sudo pip install ansible-lint yamllint
   - export IPVAGRANT=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
   - docker run -d --net=host -e OPENIO_IPADDR=${IPVAGRANT} openio/sds
   - export SDS_DOCKER_ID=$(docker ps -aq)
-  - docker exec -ti \
+  - docker exec -ti
     ${SDS_DOCKER_ID} openio container create travis_container --oio-ns OPENIO --oio-account travis_project
 
 script:
