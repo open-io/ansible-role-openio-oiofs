@@ -105,8 +105,6 @@ start_container() {
   docker run --detach \
     "${run_opts[@]}" \
     --volume="${PWD}:${role_dir}:ro" \
-    -e travis_oiofs_login=$travis_oiofs_login \
-    -e travis_oiofs_pass=$travis_oiofs_pass \
     -e IPVAGRANT=$IPVAGRANT \
     "${image_tag}" \
     "${init}" \
