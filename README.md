@@ -76,6 +76,7 @@ Each mountpoint to setup can specify the following members:
 | `max_flush_thread` | `10` | Maximum number of flusher threads |
 | `max_packed_chunks` | `10` |  |
 | `max_redis_connections` | `30` | Maximum number of connections to redis cluster |
+| `on_die` | `'respawn'` | What to do when the service handling this mountpoint dies |
 | `recovery_cache_directory` | `` | Local recovery cache directory, if any is to be used |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name |
 | `redis_sentinel_cluster` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |

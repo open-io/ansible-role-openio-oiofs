@@ -101,7 +101,7 @@
               {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
             enabled: true
             start_at_boot: '{{ mountpoint.start_at_boot | default(oiofs_mountpoint_default_start_at_boot) }}'
-            on_die: respawn
+            on_die: '{{ mountpoint.on_die | default(oiofs_mountpoint_default_on_die) }}'
             uid: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
             gid: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
             env_PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
