@@ -76,7 +76,7 @@ Each mountpoint to setup can specify the following members:
 | `max_flush_thread` | `10` | Maximum number of flusher threads |
 | `max_packed_chunks` | `10` |  |
 | `max_redis_connections` | `30` | Maximum number of connections to redis cluster |
-| `on_die` | `'respawn'` | What to do when the service handling this mountpoint dies |
+| `on_die` | `'respawn'` | What to do when the service handling this mountpoint dies (see *Note 3* below for details) |
 | `recovery_cache_directory` | `` | Local recovery cache directory, if any is to be used |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name (see *Notes 1 & 2* below for details) |
 | `redis_sentinel_cluster` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
@@ -92,6 +92,12 @@ case nothing is specified, a local standalone redis server is used.
 
 *NOTE 2*: Don't forget to give `redis_sentinel_name` if the default value does not
 suit your platform.
+
+*NOTE 3*: The following values are possible:
+
+- `'cry'`: Make gridinit warn if the service fails, but do not attempt to respawn it.
+- `'exit'`: Make gridinit itself exit if the service fails, this is probably *not* what you want.
+- `'respawn'`: Make gridinit try to restart the service upon failure.
 
 ## Dependencies
 
