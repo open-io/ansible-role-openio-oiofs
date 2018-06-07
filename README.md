@@ -85,6 +85,7 @@ Each mountpoint to setup can specify the following members:
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `sds_retry_delay` | `0` | SDS actions retry delay |
+| `syslog_prefix` | `'OIO,OPENIO,oiofs-fuse'` | Prefix used for system logging |
 
 *NOTE 1*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You
 have to choose between a standalone redis server or a redis-sentinel cluster. In
