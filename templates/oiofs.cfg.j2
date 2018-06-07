@@ -28,5 +28,6 @@
 {% if mountpoint.stats_server is defined %}
     "stats_server": "{{ mountpoint.stats_server }}",
 {% endif %}
-    "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }}
+    "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }},
+    "syslog_prefix": "{{ mountpoint.syslog_prefix | default(oiofs_mountpoint_default_syslog_prefix) }}"
 }

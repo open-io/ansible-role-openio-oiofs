@@ -51,4 +51,6 @@ oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_names
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_sds_retry_delay: 0
+oiofs_mountpoint_default_syslog_prefix: 'OIO,OPENIO,oiofs-fuse'
+
 ...
