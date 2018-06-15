@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+$ModLoad imudp
+$UDPServerRun 514
+$template Oiofs,"%msg%\n"
+:syslogtag, isequal, "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}:" -{{ oiofs_logfile }};Oiofs
+& stop
