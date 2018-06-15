@@ -4,8 +4,8 @@ openio_oiofs_packages:
   - openio-sds
   - oiofs-fuse
 
-oiofs_logs_directory_owner: openio
+oiofs_logs_directory_owner: syslog
 oiofs_logs_directory_group: openio
-oiofs_logs_directory_mode: 0751
+oiofs_logs_directory_mode: 0771
 
 ...

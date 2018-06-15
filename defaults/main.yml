@@ -10,6 +10,18 @@ openio_gridinit_conf_confd: /etc/gridinit.d
 oiofs_logs_directory: '/var/log/oio/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/oiofs'
 oiofs_logfile: '{{ oiofs_logs_directory }}/{{ mountpoint_id }}.log'
 
+# Rsyslog configuration
+oiofs_rsyslog_managed: true
+oiofs_rsyslog_service_name: rsyslog
+oiofs_rsyslog_conf_template: rsyslog_oiofs.conf.j2
+oiofs_rsyslog_conf_path: '/etc/rsyslog.d/49-oiofs-{{ mountpoint_id }}.conf'
+
+# Logrotate configuration
+oiofs_logrotate_managed: true
+oiofs_logrotate_conf_template: logrotate_oiofs.conf.j2
+oiofs_logrotate_template_conf_path: '/etc/logrotate.d/oiofs-{{ mountpoint_id }}'
+oiofs_logrotate_retention: 5
+
 openio_oiofs_cfg_user: 'openio'
 openio_oiofs_cfg_group: 'openio'
 
@@ -57,6 +69,5 @@ oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_names
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_sds_retry_delay: 0
-oiofs_mountpoint_default_syslog_prefix: 'OIO,OPENIO,oiofs-fuse'
 
 ...

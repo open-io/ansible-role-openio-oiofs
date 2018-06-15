@@ -23,6 +23,33 @@
     - mountpoint.redis_sentinel_servers is defined
     - (mountpoint.redis_sentinel_servers | length) < 1
 
+- name: 'oiofs: Ensure log directory exists'
+  file:
+    path: "{{ oiofs_logs_directory }}"
+    owner: '{{ oiofs_logs_directory_owner }}'
+    group: '{{ oiofs_logs_directory_group }}'
+    state: directory
+    mode: '{{ oiofs_logs_directory_mode }}'
+
+- name: 'oiofs: Set rsyslog configuration'
+  template:
+    src: "{{ oiofs_rsyslog_conf_template }}"
+    dest: "{{ oiofs_rsyslog_conf_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: oiofs_rsyslog_managed
+  notify: restart rsyslog
+
+- name: 'oiofs: Set logrotate configuration'
+  template:
+    src: "{{ oiofs_logrotate_conf_template }}"
+    dest: "{{ oiofs_logrotate_template_conf_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: oiofs_logrotate_managed
+
 - name: 'oiofs: Setup oiofs configuration'
   template:
     src: "oiofs.cfg.j2"
