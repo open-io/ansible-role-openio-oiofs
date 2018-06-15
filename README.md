@@ -55,17 +55,17 @@ Each mountpoint to setup can specify the following members:
 | `ecd_port` | `6017` | SDS ecd port |
 | `force_mkfs` | `false` | In case the container already had an oiofs inside |
 | `cache_action` | `'flush'` |  'flush': use previous cache content / 'erase': forget previous cache content |
-| `user` | `root` |  |
-| `group` | `root` |  |
-| `mode` | `'0755'` |  |
+| `user` | `root` | User name used to mount the filesystem |
+| `group` | `root` | Group name used to mount the filesystem |
+| `mode` | `'0755'` | Mode used to mount the filesystem |
 | `fuse_options` | `['default_permissions', 'allow_other']` | List of strings: options passed to fuse with a "-o" when mounting the filesystem |
 | `fuse_flags` | `[]` | List of strings: flags passed to fuse when mounting the filesystem |
-| `attributes_timeout` | `20` |  |
-| `auto_retry` | `true` |  |
-| `cache_asynchronous` | `true` |  |
+| `attributes_timeout` | `20` | Attributes validity timeout (in seconds) |
+| `auto_retry` | `true` | Automatic retry of read/write/flush operations |
+| `cache_asynchronous` | `true` | Make the cache async/sync |
 | `cache_directory` | `'/mnt/oiofs-cache'` | Local cache directory where to store data before sending to the SDS cluster |
 | `cache_size_bytes` | `2048000000` | Cache size in bytes |
-| `cache_size_on_flush_bytes` | `1024000000` |  |
+| `cache_size_on_flush_bytes` | `1024000000` | On cache full events, the cache will flush data until this size is attained (in bytes) |
 | `cache_timeout` | `5` | Seconds between automatic cache flushes |
 | `chunk_size` | `1048576` | Chunk size in bytes (only used at mkfs.oiofs time) |
 | `chunk_part_size` | `1048576` | Chunk part size in bytes (only useful if `recovery_cache_directory` is given |
@@ -74,18 +74,20 @@ Each mountpoint to setup can specify the following members:
 | `inode_by_container` | `65536` | Maximum number of inodes per container (only used at mkfs.oiofs time) |
 | `log_level` | `'NOTICE'` | NOTICE < INFO < DEBUG |
 | `max_flush_threads` | `10` | Maximum number of flusher threads |
-| `max_packed_chunks` | `10` |  |
+| `max_packed_chunks` | `10` | Maximum number of chunks per upload |
 | `max_redis_connections` | `30` | Maximum number of connections to redis cluster |
 | `on_die` | `'respawn'` | What to do when the service handling this mountpoint dies (see *Note 3* below for details) |
 | `recovery_cache_directory` | `` | Local recovery cache directory, if any is to be used |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name (see *Notes 1 & 2* below for details) |
 | `redis_sentinel_servers` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
 | `redis_server | `'127.0.0.1:6379'` | Single standalone redis server (see *Note 1* below for details) |
-| `retry_delay` | `500` |  |
+| `retry_delay` | `500` | Delay before retrying after an error (in milliseconds) |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `stats_server` | `None` | Web service address to query for mountpoint statistics |
 | `sds_retry_delay` | `0` | SDS actions retry delay |
 | `syslog_prefix` | `'OIO,OPENIO,oiofs-fuse'` | Prefix used for system logging |
+
+The full documentation for these options is [here](https://github.com/open-io/oio-fs/blob/master/CONF.md).
 
 *NOTE 1*: `redis_server` and `redis_sentinel_name` are mutually exclusive. You
 have to choose between a standalone redis server or a redis-sentinel cluster. In
