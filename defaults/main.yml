@@ -4,6 +4,12 @@
 openio_oiofs_conf_directory: '/etc/oio/oiofs.conf.d'
 openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 
+openio_gridinit_per_ns: false
+openio_gridinit_conf_confd: /etc/gridinit.d
+
+oiofs_logs_directory: '/var/log/oio/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/oiofs'
+oiofs_logfile: '{{ oiofs_logs_directory }}/{{ mountpoint_id }}.log'
+
 openio_oiofs_cfg_user: 'openio'
 openio_oiofs_cfg_group: 'openio'
 
