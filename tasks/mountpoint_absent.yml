@@ -6,18 +6,15 @@
     state: stop
   ignore_errors: true
 
-- name: 'oiofs: Remove mountpoint as a gridinit service'
-  include_role:
-    name: gridinit
-  vars:
-    - openio_gridinit_services:
-        - name: "oiofs-{{ mountpoint_id }}"
-          namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-          state: absent
-
-- name: 'oiofs: Remove oiofs configuration file'
+- name: 'oiofs: Remove oiofs configuration files'
   file:
-    path: "{{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json"
+    path: '{{ item }}'
     state: absent
+  with_items:
+    - "{{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json"
+    - "{{ openio_gridinit_conf_confd + '/' + (mountpoint.namespace |
+      default(oiofs_mountpoint_default_namespace)) + '/oiofs-' + mountpoint_id + '.conf'
+      if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + (mountpoint.namespace |
+      default(oiofs_mountpoint_default_namespace)) + '-oiofs-' + mountpoint_id + '.conf' }}"
 
 ...

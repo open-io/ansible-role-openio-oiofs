@@ -30,6 +30,7 @@
     owner: '{{ openio_oiofs_cfg_user }}'
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
+  register: _oiofs_conf
 
 - name: Check if OIOFS is already present in container
   command: "openio reference show {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} \
@@ -79,30 +80,23 @@
   when: mountpoint.recovery_cache_directory is defined
 
 - name: 'oiofs: Setup mountpoint as a gridinit service'
-  include_role:
-    name: gridinit
-  vars:
-    - openio_gridinit_conf_location: "{{ openio_gridinit_conf_confd }}/*"
-    - openio_gridinit_services:
-        - name: "oiofs-{{ mountpoint_id }}"
-          namespace: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}"
-          state: 'present'
-          type: oiofs
-          configuration:
-            command: "oiofs-fuse \
-              -f {% for opt in (mountpoint.fuse_options | default(oiofs_mountpoint_default_fuse_options)) %} \
-              -o {{ opt }} {% endfor %} \
-              {% for flag in (mountpoint.fuse_flags | default(oiofs_mountpoint_default_fuse_flags)) %} \
-              {{ flag }} {% endfor %} \
-              --oiofs-config {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json \
-              --cache-action {{ mountpoint.cache_action | default(oiofs_mountpoint_default_cache_action) }} \
-              --oiofs-user-url {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/\
-              {{ mountpoint.account | default(oiofs_mountpoint_default_account) }}/\
-              {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} {{ mountpoint.path }}"
-            enabled: true
-            start_at_boot: '{{ mountpoint.start_at_boot | default(oiofs_mountpoint_default_start_at_boot) }}'
-            on_die: '{{ mountpoint.on_die | default(oiofs_mountpoint_default_on_die) }}'
-            uid: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
-            gid: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
-            env_PATH: "/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
+  template:
+    src: "gridinit_oiofs.conf.j2"
+    dest: "{{ openio_gridinit_conf_confd + '/' + (mountpoint.namespace |
+      default(oiofs_mountpoint_default_namespace)) + '/oiofs-' + mountpoint_id + '.conf'
+      if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + (mountpoint.namespace |
+      default(oiofs_mountpoint_default_namespace)) + '-oiofs-' + mountpoint_id + '.conf' }}"
+    owner: openio
+    group: openio
+    mode: 0644
+  register: _gridinit_conf
+
+- name: 'oiofs: reload gridinit config files'
+  command: 'gridinit_cmd reload'
+  when: _oiofs_conf.changed or _gridinit_conf.changed
+
+- name: 'oiofs: mount filesystem'
+  command: 'gridinit_cmd start \
+    {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}-oiofs-{{ mountpoint_id }}'
+  when: _oiofs_conf.changed or _gridinit_conf.changed
 ...
