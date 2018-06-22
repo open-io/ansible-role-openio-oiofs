@@ -10,6 +10,7 @@
     "chunk_part_size": {{ mountpoint.chunk_part_size | default(oiofs_mountpoint_default_chunk_part_size) | int | to_json }},
 {% endif %}
     "fuse_max_retries": {{ mountpoint.fuse_max_retries | default(oiofs_mountpoint_default_fuse_max_retries) | int | to_json }},
+    "ha_write_timeout": {{ mountpoint.ha_write_timeout | default(oiofs_mountpoint_default_ha_write_timeout) | int | to_json }},
     "ignore_flush": {{ mountpoint.ignore_flush | default(oiofs_mountpoint_default_ignore_flush) | bool | to_json }},
     "log_level": "{{ mountpoint.log_level | default(oiofs_mountpoint_default_log_level) }}",
     "max_flush_threads": {{ mountpoint.max_flush_threads | default(oiofs_mountpoint_default_max_flush_threads) | int | to_json }},
@@ -29,6 +30,7 @@
     "http_server": "{{ mountpoint.http_server | default(oiofs_mountpoint_default_http_server) }}",
 {% endif %}
     "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }},
+    "sync_ha": {{ mountpoint.sync_ha | default(oiofs_mountpoint_default_sync_ha) | bool | to_json }},
     "syslog_prefix": "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}",
 {% if mountpoint.active_mode is defined %}
     "active_mode": {{ mountpoint.active_mode }},

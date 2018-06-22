@@ -59,6 +59,7 @@ oiofs_mountpoint_default_cache_size_bytes: 2048000000
 oiofs_mountpoint_default_cache_size_on_flush_bytes: 1024000000
 oiofs_mountpoint_default_cache_timeout: 5
 oiofs_mountpoint_default_chunk_part_size: 1048576
+oiofs_mountpoint_default_ha_write_timeout: 500
 oiofs_mountpoint_default_ignore_flush: true
 oiofs_mountpoint_default_fuse_max_retries: 10
 oiofs_mountpoint_default_log_level: 'NOTICE'  # 'NOTICE' < 'INFO' < 'DEBUG'
@@ -70,6 +71,7 @@ oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_names
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_sds_retry_delay: 0
+oiofs_mountpoint_default_sync_ha: true
 oiofs_mountpoint_default_full_cache_timeout: 500
 oiofs_mountpoint_default_http_server: '172.0.0.1:6999'
 
