@@ -146,6 +146,10 @@ oiofs_mountpoints:
             user: 'oiofs'
             password: 'THE_MIRROR_PASSWORD'
 
+    - name: "Apply 'ansible-role-openio-gridinit' role"
+      include_role:
+          name: ansible-role-openio-gridinit
+
     - name: "Apply 'ansible-role-openio-oiofs' role"
       include_role:
           name: ansible-role-openio-oiofs
@@ -179,6 +183,10 @@ Another, more involved, one:
             release: '17.04'
             user: 'oiofs'
             password: 'THE_MIRROR_PASSWORD'
+
+    - name: "Apply 'ansible-role-openio-gridinit' role"
+      include_role:
+          name: ansible-role-openio-gridinit
 
     - name: "Apply 'ansible-role-openio-oiofs' role"
       include_role:
