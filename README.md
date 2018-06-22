@@ -70,6 +70,7 @@ Each mountpoint to setup can specify the following members:
 | `chunk_size` | `1048576` | Chunk size in bytes (only used at mkfs.oiofs time) |
 | `chunk_part_size` | `1048576` | Chunk part size in bytes (only useful if `recovery_cache_directory` is given |
 | `fuse_max_retries` | `10` | Maximum number of fuse retry attempts |
+| `ha_write_timeout` | `500` | Write timeout of the distance cache (in milliseconds and > 0) |
 | `ignore_flush` | `true` | Ignore flushes |
 | `inode_by_container` | `65536` | Maximum number of inodes per container (only used at mkfs.oiofs time) |
 | `log_level` | `'NOTICE'` | NOTICE < INFO < DEBUG |
@@ -85,6 +86,7 @@ Each mountpoint to setup can specify the following members:
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `http_server` | `127.0.0.1:6999` | Web service address to query for mountpoint statistics |
 | `sds_retry_delay` | `0` | SDS actions retry delay |
+| `sync_ha` | `true` | To only flush to the "recovery_cache_directory" on sync you need to change this value (true by default) |
 | `full_cache_timeout` | `500` | Cache timeout |
 | `active_mode` | `` | Default service mode, used for high availability. Set to 'true' to be active by default or 'false' to disable by default |
 | `cache_size_for_flush_activation` | `1638400000` | If the cache reach this size oio-fs will start to flush until it reach `cache_size_on_flush_bytes` |
