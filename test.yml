@@ -5,6 +5,7 @@
     NS: TRAVIS
   roles:
     - role: repository
+      openio_repository_mirror_host: 'mirror2.openio.io'
       openio_repository_products:
         sds:
           release: "17.04"
