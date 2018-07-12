@@ -87,6 +87,7 @@ Each mountpoint to setup can specify the following members:
 | `sds_retry_delay` | `0` | SDS actions retry delay |
 | `full_cache_timeout` | `500` | Cache timeout |
 | `active_mode` | `` | Default service mode, used for high availability. Set to 'true' to be active by default or 'false' to disable by default |
+| `cache_size_for_flush_activation` | `1638400000` | If the cache reach this size oio-fs will start to flush until it reach `cache_size_on_flush_bytes` |
 
 The full documentation for these options is [here](https://github.com/open-io/oio-fs/blob/master/CONF.md).
 

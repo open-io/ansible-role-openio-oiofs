@@ -4,6 +4,7 @@
     "cache_asynchronous": {{ mountpoint.cache_asynchronous | default(oiofs_mountpoint_default_cache_asynchronous) | bool | to_json }},
     "cache_directory": "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}/oiofs-cache-{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container}}",
     "cache_size": {{ mountpoint.cache_size_bytes | default(oiofs_mountpoint_default_cache_size_bytes) | int | to_json }},
+    "cache_size_for_flush_activation": {{ mountpoint.cache_size_for_flush_activation | default(oiofs_mountpoint_default_cache_size_for_flush_activation) | int | to_json }},
     "cache_size_on_flush": {{ mountpoint.cache_size_on_flush_bytes | default(oiofs_mountpoint_default_cache_size_on_flush_bytes) | int | to_json }},
     "cache_timeout": {{ mountpoint.cache_timeout | default(oiofs_mountpoint_default_cache_timeout) | int | to_json }},
 {% if mountpoint.recovery_cache_directory is defined %}
