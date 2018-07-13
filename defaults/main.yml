@@ -73,5 +73,7 @@ oiofs_mountpoint_default_retry_delay: 500
 oiofs_mountpoint_default_sds_retry_delay: 0
 oiofs_mountpoint_default_full_cache_timeout: 500
 oiofs_mountpoint_default_http_server: '172.0.0.1:6999'
+oiofs_mountpoint_default_active_mode: true
+oiofs_mountpoint_default_chunk_readahead: 0
 
 ...
