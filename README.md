@@ -80,7 +80,7 @@ Each mountpoint to setup can specify the following members:
 | `recovery_cache_directory` | `` | Local recovery cache directory, if any is to be used |
 | `redis_sentinel_name` | `'{{ oiofs_mountpoint_default_namespace }}-master-1'` | As a redis-sentinel cluster can host multiple instances, use the one with this name (see *Notes 1 & 2* below for details) |
 | `redis_sentinel_servers` | `` | List of strings: `['IP1:port1', 'IP2:port2', 'IP3:port3', ]` telling oiofs who are the redis-sentinel cluster members |
-| `redis_server | `'127.0.0.1:6379'` | Single standalone redis server (see *Note 1* below for details) |
+| `redis_server` | `'127.0.0.1:6379'` | Single standalone redis server (see *Note 1* below for details) |
 | `retry_delay` | `500` | Delay before retrying after an error (in milliseconds) |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `http_server` | `127.0.0.1:6999` | Web service address to query for mountpoint statistics |
