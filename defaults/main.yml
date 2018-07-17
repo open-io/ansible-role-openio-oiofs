@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-oiofs
 
-openio_oiofs_conf_directory: '/etc/oio/oiofs.conf.d'
+openio_oiofs_conf_directory: '/etc/oio/oiofs'
 openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 
 openio_gridinit_per_ns: false
