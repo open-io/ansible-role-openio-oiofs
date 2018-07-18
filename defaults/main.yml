@@ -61,7 +61,7 @@ oiofs_mountpoint_default_chunk_part_size: 1048576
 oiofs_mountpoint_default_ignore_flush: true
 oiofs_mountpoint_default_fuse_max_retries: 10
 oiofs_mountpoint_default_log_level: 'NOTICE'  # 'NOTICE' < 'INFO' < 'DEBUG'
-oiofs_mountpoint_default_max_flush_threads: 10
+oiofs_mountpoint_default_max_flush_threads: '{{ ansible_processor_vcpus }}'
 oiofs_mountpoint_default_max_packed_chunks: 10
 oiofs_mountpoint_default_max_redis_connections: 30
 oiofs_mountpoint_default_on_die: 'respawn'
