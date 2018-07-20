@@ -45,7 +45,7 @@ oiofs_mountpoint_default_fuse_options:
   - allow_other
   - auto_unmount
 oiofs_mountpoint_default_fuse_flags: []
-oiofs_mountpoint_default_chunk_size: 1048576
+oiofs_mountpoint_default_chunk_size: 104857600
 oiofs_mountpoint_default_inode_by_container: 65536
 
 # Those are for the template: oiofs.cfg.j2
