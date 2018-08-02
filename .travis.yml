@@ -1,6 +1,7 @@
 ---
 
 sudo: required
+dist: trusty
 
 env:
   global:
@@ -8,13 +9,17 @@ env:
   matrix:
     - DISTRIBUTION: centos
       VERSION: 7
-#    - DISTRIBUTION: ubuntu
-#      VERSION: 16.04
+    - DISTRIBUTION: ubuntu
+      VERSION: 16.04
 
 services:
   - docker
 
 before_install:
+  - sudo apt-get install -qq pkg-config fuse
+  - sudo modprobe fuse
+  - sudo chmod 666 /dev/fuse
+
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
