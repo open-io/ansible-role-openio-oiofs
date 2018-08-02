@@ -64,26 +64,13 @@ main() {
 configure_environment() {
 
   case "${DISTRIBUTION}_${VERSION}" in
-    'centos_6')
-      run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
-      ;;
     'centos_7'|'fedora_25')
       init=/usr/lib/systemd/systemd
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
       ;;
-    'ubuntu_14.04')
-      #run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
-      # Workaround for issue when the host operating system has SELinux
-      if [ -x '/usr/sbin/getenforce' ]; then
-        run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
-      fi
-      ;;
     'ubuntu_16.04'|'debian_8')
-      run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
+      run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE' '--device=/dev/fuse:/dev/fuse' '--privileged=true')
 
-      #if [ -x '/usr/sbin/getenforce' ]; then
-      #  run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
-      #fi
       ;;
     *)
       log "Warning: no run options added for ${DISTRIBUTION} ${VERSION}"

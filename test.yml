@@ -8,9 +8,9 @@
       openio_repository_mirror_host: 'mirror2.openio.io'
       openio_repository_products:
         sds:
-          release: "17.04"
+          release: "18.04"
         oiofs-travis:
-          release: "17.04"
+          release: "18.04"
           user: travisoiofs_id
           password: NehnXW4ErUEMYu8Sndju65n
     - role: gridinit

@@ -34,7 +34,7 @@
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "Field: objects, Value: 1" ]]
+  [[ "${output}" =~ "objects: 1" ]] || [[ "${output}" =~ "- {Field: objects, Value: 1}" ]]
 }
 
 @test 'delete the file' {
@@ -51,5 +51,5 @@
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "Field: objects, Value: 0" ]]
+  [[ "${output}" =~ "objects: 0" ]] || [[ "${output}" =~ "- {Field: objects, Value: 0}" ]]
 }
