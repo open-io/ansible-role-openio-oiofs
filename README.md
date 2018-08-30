@@ -83,7 +83,7 @@ Each mountpoint to setup can specify the following members:
 | `redis_server | `'127.0.0.1:6379'` | Single standalone redis server (see *Note 1* below for details) |
 | `retry_delay` | `500` | Delay before retrying after an error (in milliseconds) |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
-| `stats_server` | `None` | Web service address to query for mountpoint statistics |
+| `http_server` | `'127.0.0.1:8080'` | Web service address |
 | `sds_retry_delay` | `0` | SDS actions retry delay |
 
 The full documentation for these options is [here](https://github.com/open-io/oio-fs/blob/master/CONF.md).
