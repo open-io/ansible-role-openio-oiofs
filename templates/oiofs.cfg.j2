@@ -29,8 +29,8 @@
     "stats_server": "{{ mountpoint.stats_server }}",
 {% endif %}
     "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }},
-    "syslog_prefix": "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}",
 {% if mountpoint.active_mode is defined %}
     "active_mode": {{ mountpoint.active_mode }},
 {% endif %}
+    "syslog_prefix": "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}"
 }
