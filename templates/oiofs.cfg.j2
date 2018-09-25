@@ -2,7 +2,7 @@
     "attributes_timeout": {{ mountpoint.attributes_timeout | default(oiofs_mountpoint_default_attributes_timeout) | int | to_json }},
     "auto_retry": {{ mountpoint.auto_retry | default(oiofs_mountpoint_default_auto_retry) | bool | to_json }},
     "cache_asynchronous": {{ mountpoint.cache_asynchronous | default(oiofs_mountpoint_default_cache_asynchronous) | bool | to_json }},
-    "cache_directory": "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}",
+    "cache_directory": "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}/oiofs-cache-{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container}}",
     "cache_size": {{ mountpoint.cache_size_bytes | default(oiofs_mountpoint_default_cache_size_bytes) | int | to_json }},
     "cache_size_on_flush": {{ mountpoint.cache_size_on_flush_bytes | default(oiofs_mountpoint_default_cache_size_on_flush_bytes) | int | to_json }},
     "cache_timeout": {{ mountpoint.cache_timeout | default(oiofs_mountpoint_default_cache_timeout) | int | to_json }},
@@ -16,7 +16,7 @@
     "max_packed_chunks": {{ mountpoint.max_packed_chunks | default(oiofs_mountpoint_default_max_packed_chunks) | int | to_json }},
     "max_redis_connections": {{ mountpoint.max_redis_connections | default(oiofs_mountpoint_default_max_redis_connections) | int | to_json }},
 {% if mountpoint.recovery_cache_directory is defined %}
-    "recovery_cache_directory": "{{ mountpoint.recovery_cache_directory }}",
+    "recovery_cache_directory": "{{ mountpoint.recovery_cache_directory }}/{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}",
 {% endif %}
 {% if mountpoint.redis_sentinel_servers is defined %}
     "redis_sentinel_name": "{{ mountpoint.redis_sentinel_name | default(oiofs_mountpoint_default_redis_sentinel_name) }}",
@@ -25,12 +25,13 @@
     "redis_server": "{{ mountpoint.redis_server | default(oiofs_mountpoint_default_redis_server) }}",
 {% endif %}
     "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) | int | to_json }},
-{% if mountpoint.stats_server is defined %}
-    "stats_server": "{{ mountpoint.stats_server }}",
+{% if mountpoint.http_server is defined %}
+    "http_server": "{{ mountpoint.http_server | default(oiofs_mountpoint_default_http_server) }}",
 {% endif %}
     "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }},
     "syslog_prefix": "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}",
 {% if mountpoint.active_mode is defined %}
     "active_mode": {{ mountpoint.active_mode }},
 {% endif %}
+    "full_cache_timeout" : {{ mountpoint.full_cache_timeout | default(oiofs_mountpoint_default_full_cache_timeout) | int | to_json }},
 }
