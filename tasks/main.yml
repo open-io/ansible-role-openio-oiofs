@@ -32,7 +32,9 @@
 - name: 'oiofs: Setup mountpoint'
   include_tasks: mountpoint_present.yml
   vars:
-    mountpoint_id: "{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
+    mountpoint_id: "{{ (mountpoint.namespace | default(oiofs_mountpoint_default_namespace)) + '-' +
+                       (mountpoint.account | default(oiofs_mountpoint_default_account)) + '-' +
+                       (mountpoint.container | default(oiofs_mountpoint_default_container)) }}"
   with_items: "{{ oiofs_mountpoints }}"
   loop_control:
     loop_var: mountpoint
@@ -41,7 +43,9 @@
 - name: 'oiofs: Unsetup mountpoint'
   include_tasks: mountpoint_absent.yml
   vars:
-    mountpoint_id: "{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
+    mountpoint_id: "{{ (mountpoint.namespace | default(oiofs_mountpoint_default_namespace)) + '-' +
+                       (mountpoint.account | default(oiofs_mountpoint_default_account)) + '-' +
+                       (mountpoint.container | default(oiofs_mountpoint_default_container)) }}"
   with_items: "{{ oiofs_mountpoints }}"
   loop_control:
     loop_var: mountpoint
