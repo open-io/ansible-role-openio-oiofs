@@ -33,5 +33,5 @@
 {% if mountpoint.active_mode is defined %}
     "active_mode": {{ mountpoint.active_mode }},
 {% endif %}
-    "full_cache_timeout" : {{ mountpoint.full_cache_timeout | default(oiofs_mountpoint_default_full_cache_timeout) | int | to_json }},
+    "full_cache_timeout" : {{ mountpoint.full_cache_timeout | default(oiofs_mountpoint_default_full_cache_timeout) | int | to_json }}
 }
