@@ -81,7 +81,7 @@
     {{ mountpoint.container | default(oiofs_mountpoint_default_container) }}"
   when: oiofs_mkfsed.rc != 0 or (mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs))
   register: _oiofs_mkfs
-  failed_when: _oiofs_mkfs.rc is defined and _oiofs_mkfs.rc not in [ 0, 251]
+  failed_when: _oiofs_mkfs.rc is defined and _oiofs_mkfs.rc not in [0, 251]
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
