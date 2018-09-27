@@ -7,7 +7,7 @@ openio_sds_conf_directory: '/etc/oio/sds.conf.d'
 openio_gridinit_per_ns: false
 openio_gridinit_conf_confd: /etc/gridinit.d
 
-oiofs_logs_directory: '/var/log/oio/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}/oiofs'
+oiofs_logs_directory: '/var/log/oio/oiofs/{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}'
 oiofs_logfile: '{{ oiofs_logs_directory }}/{{ mountpoint_id }}.log'
 
 # Rsyslog configuration
