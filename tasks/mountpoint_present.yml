@@ -86,8 +86,8 @@
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
     path: "{{ mountpoint.path }}"
-    owner: root
-    group: root
+    owner: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
+    group: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
     state: directory
     mode: 0750
 
