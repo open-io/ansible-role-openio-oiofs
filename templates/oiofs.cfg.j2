@@ -27,9 +27,7 @@
     "redis_server": "{{ mountpoint.redis_server | default(oiofs_mountpoint_default_redis_server) }}",
 {% endif %}
     "retry_delay": {{ mountpoint.retry_delay | default(oiofs_mountpoint_default_retry_delay) | int | to_json }},
-{% if mountpoint.http_server is defined %}
     "http_server": "{{ mountpoint.http_server | default(oiofs_mountpoint_default_http_server) }}",
-{% endif %}
     "sds_retry_delay": {{ mountpoint.sds_retry_delay | default(oiofs_mountpoint_default_sds_retry_delay) | int | to_json }},
     "sync_ha": {{ mountpoint.sync_ha | default(oiofs_mountpoint_default_sync_ha) | bool | to_json }},
     "syslog_prefix": "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }},oiofs,{{ mountpoint_id }}",
