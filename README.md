@@ -85,7 +85,7 @@ Each mountpoint to setup can specify the following members:
 | `retry_delay` | `500` | Delay before retrying after an error (in milliseconds) |
 | `start_at_boot` | `true` | mount the FS at boot time by gridinit |
 | `http_server` | `127.0.0.1:6999` | Web service address to query for mountpoint statistics |
-| `sds_retry_delay` | `0` | SDS actions retry delay |
+| `sds_retry_delay` | `500` | SDS actions retry delay |
 | `sync_ha` | `true` | To only flush to the "recovery_cache_directory" on sync you need to change this value (true by default) |
 | `full_cache_timeout` | `500` | Cache timeout |
 | `active_mode` | `` | Default service mode, used for high availability. Set to 'true' to be active by default or 'false' to disable by default |
