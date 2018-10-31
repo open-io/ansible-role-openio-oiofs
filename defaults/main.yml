@@ -71,7 +71,7 @@ oiofs_mountpoint_default_on_die: 'respawn'
 oiofs_mountpoint_default_redis_sentinel_name: '{{ oiofs_mountpoint_default_namespace }}-master-1'
 oiofs_mountpoint_default_redis_server: '127.0.0.1:6379'
 oiofs_mountpoint_default_retry_delay: 500
-oiofs_mountpoint_default_sds_retry_delay: 0
+oiofs_mountpoint_default_sds_retry_delay: 500
 oiofs_mountpoint_default_sync_ha: true
 oiofs_mountpoint_default_full_cache_timeout: 500
 oiofs_mountpoint_default_http_server: '127.0.0.1:6999'
