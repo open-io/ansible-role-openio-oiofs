@@ -53,6 +53,7 @@ oiofs_mountpoint_default_inode_by_container: 65536
 oiofs_mountpoint_default_attributes_timeout: 20
 oiofs_mountpoint_default_auto_retry: true
 oiofs_mountpoint_default_cache_asynchronous: true
+oiofs_mountpoint_default_mount_directory: '/mnt'
 oiofs_mountpoint_default_cache_directory: '/mnt'
 oiofs_mountpoint_default_recovery_cache_directory: '/mnt/oiofs-recovery-cache'
 oiofs_mountpoint_default_cache_size_bytes: 2048000000
