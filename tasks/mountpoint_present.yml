@@ -85,7 +85,7 @@
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
-    path: "{{ mountpoint.path }}"
+    path: "{{ mountpoint.path | default(oiofs_mountpoint_default_mount_directory ~ '/oiofs-' ~ mountpoint.namespace ~ '-' ~ mountpoint.account ~ '-' ~ mountpoint.container) }}"
     owner: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
     group: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
     state: directory
