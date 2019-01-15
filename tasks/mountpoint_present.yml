@@ -85,7 +85,9 @@
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
-    path: "{{ mountpoint.path | default(oiofs_mountpoint_default_mount_directory ~ '/oiofs-' ~ mountpoint.namespace ~ '-' ~ mountpoint.account ~ '-' ~ mountpoint.container) }}"
+    path: "{{ mountpoint.path \
+      | default(oiofs_mountpoint_default_mount_directory ~ '/oiofs-' \
+      ~ mountpoint.namespace ~ '-' ~ mountpoint.account ~ '-' ~ mountpoint.container) }}"
     owner: "{{ mountpoint.user | default(oiofs_mountpoint_default_user) }}"
     group: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
     state: directory
@@ -93,7 +95,9 @@
 
 - name: 'oiofs: Ensure oiofs cache directory exists'
   file:
-    path: "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}/oiofs-cache-{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
+    path: "{{ mountpoint.cache_directory \
+      | default(oiofs_mountpoint_default_cache_directory) }}\
+      /oiofs-cache-{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
     owner: root
     group: root
     state: directory
@@ -101,7 +105,9 @@
 
 - name: 'oiofs: Ensure oiofs cache recovery directory exists'
   file:
-    path: "{{ mountpoint.recovery_cache_directory | default(oiofs_mountpoint_default_recovery_cache_directory) }}/{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
+    path: "{{ mountpoint.recovery_cache_directory \
+      | default(oiofs_mountpoint_default_recovery_cache_directory) }}\
+      /{{ mountpoint.namespace }}-{{ mountpoint.account }}-{{ mountpoint.container }}"
     owner: root
     group: root
     state: directory

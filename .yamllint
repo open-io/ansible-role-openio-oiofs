@@ -1,7 +1,8 @@
 ---
 ignore: |
-  roles
-  archives
+  docker-tests/
+  venv/
+  .travis.yml
 rules:
   braces:
     level: error
