@@ -9,9 +9,16 @@
 
 - name: 'oiofs: Install packages'
   package:
-    name: "{{ item }}"
+    name: "{{ pkg }}"
     state: present
+  loop_control:
+    loop_var: pkg
   with_items: "{{ openio_oiofs_packages }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  register: install_packages
+  until: install_packages is success
+  retries: 5
+  delay: 2
 
 - name: 'oiofs: Ensure OpenIO SDS configuration directory exists'
   file:
