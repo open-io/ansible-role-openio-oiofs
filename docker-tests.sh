@@ -64,13 +64,26 @@ main() {
 configure_environment() {
 
   case "${DISTRIBUTION}_${VERSION}" in
-    'centos_7'|'fedora_25')
+    'centos_6')
+      run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
+      ;;
+    'centos_8'|'centos_7'|'fedora_25')
       init=/usr/lib/systemd/systemd
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
       ;;
-    'ubuntu_16.04'|'debian_8')
-      run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE' '--device=/dev/fuse:/dev/fuse' '--privileged=true')
+    'ubuntu_14.04')
+      #run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
+      # Workaround for issue when the host operating system has SELinux
+      if [ -x '/usr/sbin/getenforce' ]; then
+        run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
+      fi
+      ;;
+    'ubuntu_18.04'|'ubuntu_16.04'|'debian_8')
+      run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=NET_ADMIN' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
 
+      #if [ -x '/usr/sbin/getenforce' ]; then
+      #  run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
+      #fi
       ;;
     *)
       log "Warning: no run options added for ${DISTRIBUTION} ${VERSION}"
@@ -88,15 +101,15 @@ build_container() {
 
 start_container() {
   log "Starting container"
-  #set -x
+  set -x
   docker run --detach \
     "${run_opts[@]}" \
     --volume="${PWD}:${role_dir}:ro" \
-    -e IPVAGRANT=$IPVAGRANT \
+    -e IPVAGRANT=${IPVAGRANT:=""} \
     "${image_tag}" \
     "${init}" \
     > "${container_id}"
-  #set +x
+  set +x
 }
 
 get_container_id() {
@@ -138,7 +151,7 @@ run_syntax_check() {
 
 run_test_playbook() {
   log 'Running playbook'
-  exec_container ansible-playbook --diff "${test_playbook}" 
+  exec_container ansible-playbook "${test_playbook}" --diff
   log 'Run finished'
 }
 
@@ -149,13 +162,13 @@ run_galaxy_install() {
 }
 
 run_idempotence_test() {
-  log 'Running idempotence test' 
+  log 'Running idempotence test'
   local output
   output="$(mktemp)"
 
-  exec_container ansible-playbook --diff "${test_playbook}" 2>&1 | tee "${output}"
+  exec_container ansible-playbook "${test_playbook}" --diff 2>&1 | tee "${output}"
 
-  if grep -q 'changed=0.*failed=0' "${output}"; then
+  if grep -q "changed=${NORMALCHANGES:=0}.*failed=0" "${output}"; then
     result='pass'
     return_status=0
   else
@@ -188,4 +201,3 @@ log() {
 #}}}
 
 main "${@}"
-
