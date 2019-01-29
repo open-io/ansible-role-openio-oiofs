@@ -1,43 +1,72 @@
 ---
-
+dist: xenial
 sudo: required
-dist: trusty
 
 env:
   global:
-    - ANSIBLE_VERSION: 2.5
+    - ANSIBLE_VERSION=2.5
   matrix:
     - DISTRIBUTION: centos
       VERSION: 7
+#    - DISTRIBUTION: centos
+#      VERSION: 8
     - DISTRIBUTION: ubuntu
       VERSION: 16.04
+    - DISTRIBUTION: ubuntu
+      VERSION: 18.04
+#    - DISTRIBUTION: debian
+#      VERSION: 9
 
 services:
   - docker
 
 before_install:
+  # install fuse
   - sudo apt-get install -qq pkg-config fuse
   - sudo modprobe fuse
   - sudo chmod 666 /dev/fuse
 
+  # Install latest Git
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
+
+  # Allow fetching other branches than master
   - git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+
+  # Fetch the branch with test code
   - git fetch origin docker-tests
   - git worktree add docker-tests origin/docker-tests
+
+  # Retrieve library
   - curl https://github.com/open-io/ansible-role-openio-gridinit/blob/master/library/gridinitcmd.py
     --create-dirs -o library/gridinitcmd.py
-  - sudo pip install --upgrade pip
-  - sudo pip install ansible-lint yamllint
-  - export IPVAGRANT=$(ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+
+  # retrieve centralized script
+  - |
+    for i in docker-tests.sh functional-tests.sh ansible.cfg; do
+      wget -O docker-tests/${i} https://raw.githubusercontent.com/open-io/ansible-role-openio-skeleton/docker-tests/${i}
+    done
+
+  # SDS
+  - export IPVAGRANT=$(ip -o -4 addr list ens4 | awk '{print $4}' | cut -d/ -f1)
   - docker run -d --net=host -e OPENIO_IPADDR=${IPVAGRANT} openio/sds
   - export SDS_DOCKER_ID=$(docker ps -aq)
   - while ! docker exec -ti ${SDS_DOCKER_ID}
     openio container create travis_container --oio-ns OPENIO --oio-account travis_project; do sleep 1; done
 
+  # Lint
+  - sudo pip install --upgrade pip
+  - sudo pip install ansible-lint yamllint
+
 script:
-  - ansible-lint . -x ANSIBLE0016
+  # Lint
+  #- ansible-lint . -x ANSIBLE0016
   - yamllint .
+
+  # Create container and apply test playbook
   - ./docker-tests/docker-tests.sh
+
+  # Run functional tests on the container
+  #- SUT_ID=$(docker ps -qa) ./docker-tests/functional-tests.sh
   - SUT_ID=$(docker ps -qa | head -n 1) ./docker-tests/functional-tests.sh
 ...
