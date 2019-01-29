@@ -9,11 +9,11 @@
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
-  [[ "${output}" =~ "/mnt/oiofs-1/mnt" ]]
+  [[ "${output}" =~ "/mnt1/oiofs-OPENIO-travis_project-travis_container" ]]
 }
 
 @test 'gridinit resource is UP' {
-  run bash -c "docker exec -ti ${SUT_ID} gridinit_cmd status OPENIO-oiofs-mnt_oiofs_1_mnt"
+  run bash -c "docker exec -ti ${SUT_ID} gridinit_cmd status OPENIO-oiofs-OPENIO-travis_project-travis_container"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
@@ -21,7 +21,7 @@
 }  
 
 @test 'put a file into the volume' {
-  run bash -c "docker exec -ti ${SUT_ID} cp /etc/machine-id /mnt/oiofs-1/mnt"
+  run bash -c "docker exec -ti ${SUT_ID} cp /etc/machine-id /mnt1/oiofs-OPENIO-travis_project-travis_container/"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
@@ -38,7 +38,7 @@
 }
 
 @test 'delete the file' {
-  run bash -c "docker exec -ti ${SUT_ID} rm -f /mnt/oiofs-1/mnt/machine-id"
+  run bash -c "docker exec -ti ${SUT_ID} rm -f /mnt1/oiofs-OPENIO-travis_project-travis_container/machine-id"
   echo "output: "$output
   echo "status: "$status
   [[ "${status}" -eq "0" ]]
