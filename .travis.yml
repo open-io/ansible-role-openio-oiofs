@@ -42,10 +42,10 @@ before_install:
     --create-dirs -o library/gridinitcmd.py
 
   # retrieve centralized script
-  - |
-    for i in docker-tests.sh functional-tests.sh ansible.cfg; do
-      wget -O docker-tests/${i} https://raw.githubusercontent.com/open-io/ansible-role-openio-skeleton/docker-tests/${i}
-    done
+#  - |
+#    for i in docker-tests.sh functional-tests.sh ansible.cfg; do
+#      wget -O docker-tests/${i} https://raw.githubusercontent.com/open-io/ansible-role-openio-skeleton/docker-tests/${i}
+#    done
 
   # SDS
   - export IPVAGRANT=$(ip -o -4 addr list ens4 | awk '{print $4}' | cut -d/ -f1)
