@@ -18,5 +18,11 @@
       default(oiofs_mountpoint_default_namespace)) + '/oiofs-' + mountpoint_id + '.conf'
       if openio_gridinit_per_ns else openio_gridinit_conf_confd + '/' + (mountpoint.namespace |
       default(oiofs_mountpoint_default_namespace)) + '-oiofs-' + mountpoint_id + '.conf' }}"
+  register: _delete_files
+
+- name: "oiofs: Reload gridinit"
+  gridinitcmd:
+    state: reload
+  when: _delete_files is changed
 
 ...
