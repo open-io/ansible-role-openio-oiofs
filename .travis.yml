@@ -53,6 +53,8 @@ before_install:
   - export SDS_DOCKER_ID=$(docker ps -aq)
   - while ! docker exec -ti ${SDS_DOCKER_ID}
     openio container create travis_container --oio-ns OPENIO --oio-account travis_project; do sleep 1; done
+  #- while ! docker exec -ti ${SDS_DOCKER_ID}
+  #  openio container create travis_to_delete --oio-ns OPENIO --oio-account travis_project; do sleep 1; done
 
   # Lint
   - sudo pip install --upgrade pip
