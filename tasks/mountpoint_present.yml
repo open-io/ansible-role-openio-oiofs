@@ -97,7 +97,7 @@
 - name: 'oiofs: Ensure oiofs cache directory exists'
   file:
     path: "{{ mountpoint.cache_directory \
-      | default(oiofs_mountpoint_default_cache_directory) }} \
+      | default(oiofs_mountpoint_default_cache_directory) }}\
       /oiofs-cache-{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}\
       -{{ mountpoint.account }}-{{ mountpoint.container }}"
     owner: root
