@@ -1,9 +1,7 @@
 ---
 
 - name: "oiofs: Unmount filesystem (by stopping gridinit service)"
-  gridinitcmd:
-    name: "{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}-oiofs-{{ mountpoint_id }}"
-    state: stop
+  command: "gridinit_cmd stop {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}-oiofs-{{ mountpoint_id }}"
   ignore_errors: true
 
 - name: 'oiofs: Remove oiofs configuration files'
@@ -21,8 +19,9 @@
   register: _delete_files
 
 - name: "oiofs: Reload gridinit"
-  gridinitcmd:
-    state: reload
+  systemd:
+    name: gridinit
+    state: reloaded
   when: _delete_files is changed
 
 ...
