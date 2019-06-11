@@ -6,6 +6,9 @@
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
+  tags:
+    - install
+    - configure
 
 - name: 'oiofs: Install packages'
   package:
@@ -19,6 +22,7 @@
   until: install_packages is success
   retries: 5
   delay: 2
+  tags: install
 
 - name: 'oiofs: Ensure OpenIO SDS configuration directory exists'
   file:
@@ -27,6 +31,7 @@
     group: openio
     state: directory
     mode: 0755
+  tags: configure
 
 - name: 'oiofs: Ensure OpenIO oiofs configuration directory exists'
   file:
@@ -35,6 +40,7 @@
     group: openio
     state: directory
     mode: 0755
+  tags: configure
 
 - name: 'oiofs: Setup mountpoint'
   include_tasks: mountpoint_present.yml
@@ -45,6 +51,7 @@
   loop_control:
     loop_var: mountpoint
   when: mountpoint.state == 'present'
+  tags: configure
 
 - name: 'oiofs: Unsetup mountpoint'
   include_tasks: mountpoint_absent.yml
@@ -55,5 +62,5 @@
   loop_control:
     loop_var: mountpoint
   when: mountpoint.state == 'absent'
-
+  tags: configure
 ...

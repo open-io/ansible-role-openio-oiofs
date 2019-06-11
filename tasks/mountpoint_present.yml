@@ -7,6 +7,7 @@
     owner: '{{ openio_oiofs_cfg_user }}'
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
+  tags: configure
 
 - name: 'Check given mountpoint redis config: not more than one'
   fail:
@@ -14,6 +15,7 @@
   when:
     - mountpoint.redis_server is defined
     - mountpoint.redis_sentinel_servers is defined
+  tags: configure
 
 - name: 'Check given mountpoint redis config: cluster cannot be empty'
   fail:
@@ -22,6 +24,7 @@
     - mountpoint.redis_server is not defined
     - mountpoint.redis_sentinel_servers is defined
     - (mountpoint.redis_sentinel_servers | length) < 1
+  tags: configure
 
 - name: 'oiofs: Ensure log directory exists'
   file:
@@ -30,6 +33,7 @@
     group: '{{ oiofs_logs_directory_group }}'
     state: directory
     mode: '{{ oiofs_logs_directory_mode }}'
+  tags: configure
 
 - name: 'oiofs: Set rsyslog configuration'
   template:
@@ -40,6 +44,7 @@
     mode: 0644
   when: oiofs_rsyslog_managed
   notify: restart rsyslog
+  tags: configure
 
 - name: 'oiofs: Set logrotate configuration'
   template:
@@ -49,6 +54,7 @@
     group: root
     mode: 0644
   when: oiofs_logrotate_managed
+  tags: configure
 
 - name: 'oiofs: Setup oiofs configuration'
   template:
@@ -58,6 +64,7 @@
     group: '{{ openio_oiofs_cfg_group }}'
     mode: 0644
   register: _oiofs_conf
+  tags: configure
 
 - name: Check if OIOFS is already present in container
   command: "openio reference show {{ mountpoint.container | default(oiofs_mountpoint_default_container) }} \
@@ -67,6 +74,7 @@
   register: oiofs_mkfsed
   changed_when: false
   failed_when: false
+  tags: configure
 
 - name: "oiofs: Create the filesystem inside container"
   shell: "mkfs.oiofs -C {{ openio_oiofs_conf_directory }}/{{ mountpoint_id }}.json \
@@ -82,6 +90,7 @@
   when: oiofs_mkfsed.rc != 0 or (mountpoint.force_mkfs | default(oiofs_mountpoint_default_force_mkfs))
   register: _oiofs_mkfs
   failed_when: _oiofs_mkfs.rc is defined and _oiofs_mkfs.rc not in [0, 17, 251]
+  tags: configure
 
 - name: 'oiofs: Ensure OpenIO oiofs mountpoint directory exists'
   file:
@@ -93,6 +102,7 @@
     group: "{{ mountpoint.group | default(oiofs_mountpoint_default_group) }}"
     state: directory
     mode: 0750
+  tags: configure
 
 - name: 'oiofs: Ensure oiofs cache directory exists'
   file:
@@ -104,6 +114,7 @@
     group: root
     state: directory
     mode: 0750
+  tags: configure
 
 - name: 'oiofs: Ensure oiofs cache recovery directory exists'
   file:
@@ -116,6 +127,7 @@
     state: directory
     mode: 0750
   when: mountpoint.recovery_cache_directory is defined
+  tags: configure
 
 - name: 'oiofs: Setup mountpoint as a gridinit service'
   template:
@@ -129,13 +141,16 @@
     group: openio
     mode: 0644
   register: _gridinit_conf
+  tags: configure
 
 - name: 'oiofs: reload gridinit config files'
   command: 'gridinit_cmd reload'
   when: _oiofs_conf.changed or _gridinit_conf.changed
+  tags: configure
 
 - name: 'oiofs: mount filesystem'
   command: 'gridinit_cmd start \
     {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}-oiofs-{{ mountpoint_id }}'
   when: _oiofs_conf.changed or _gridinit_conf.changed
+  tags: configure
 ...
