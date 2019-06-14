@@ -2,6 +2,7 @@
 
 - name: "oiofs: Unmount filesystem (by stopping gridinit service)"
   command: "gridinit_cmd stop {{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}-oiofs-{{ mountpoint_id }}"
+  changed_when: false
   ignore_errors: true
   tags: configure
 

@@ -1,0 +1,51 @@
+---
+- hosts: all
+  become: true
+  vars:
+    NS: OPENIO
+  roles:
+    - role: users
+    - role: repo
+      openio_repository_no_log: false
+      openio_repository_mirror_host: mirror2.openio.io
+    - role: repo
+      openio_repository_no_log: false
+      openio_repository_mirror_host: mirror2.openio.io
+      openio_repository_products:
+        oiofs:
+          release: "19.04"
+          user: "{{ lookup('env','USR') }}"
+          password: "{{ lookup('env','PASS') }}"
+          #user: travisoiofs_id
+          #password: NehnXW4ErUEMYu8Sndju65n
+    - role: gridinit
+      openio_gridinit_namespace: "{{ NS }}"
+
+    - role: role_under_test
+      oiofs_mountpoint_default_mount_directory: '/mnt1'                                                                        
+      oiofs_mountpoint_default_cache_directory: '/mnt1'
+      oiofs_mountpoint_default_namespace: "{{ NS }}"
+      oiofs_mountpoints:
+        - state: present
+          account: travis_project
+          container: travis_container
+          # force_mkfs: true
+          log_level: INFO
+          oioproxy_host: "172.17.0.2"
+          redis_server: "172.17.0.2:6011"
+          # for CI only
+          cache_timeout: 0
+          ignore_flush: false
+
+        # test deletion
+        - state: absent
+          account: travis_project
+          container: travis_to_delete
+          # force_mkfs: true
+          log_level: INFO
+          oioproxy_host: "172.17.0.2"
+          redis_server: "172.17.0.2:6011"
+          # for CI only
+          cache_timeout: 0
+          ignore_flush: false
+...
