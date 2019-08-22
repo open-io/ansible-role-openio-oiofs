@@ -44,6 +44,7 @@ oiofs_mountpoint_default_fuse_options:
   - default_permissions
   - allow_other
   - auto_unmount
+  - big_writes
 oiofs_mountpoint_default_fuse_flags: []
 oiofs_mountpoint_default_chunk_size: 104857600
 oiofs_mountpoint_default_inode_by_container: 65536
