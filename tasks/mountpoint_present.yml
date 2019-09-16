@@ -115,6 +115,20 @@
     state: directory
     mode: 0750
   tags: configure
+  when: mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) is string
+
+- name: 'oiofs: Ensure oiofs cache directory exists'
+  file:
+    path: "{{ item }}/oiofs-cache-{{ mountpoint.namespace | default(oiofs_mountpoint_default_namespace) }}\
+      -{{ mountpoint.account }}-{{ mountpoint.container }}"
+    owner: root
+    group: root
+    state: directory
+    mode: 0750
+  tags: configure
+  with_items: "{{ mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) }}"
+  when: mountpoint.cache_directory | default(oiofs_mountpoint_default_cache_directory) is not string
+
 
 - name: 'oiofs: Ensure oiofs cache recovery directory exists'
   file:
